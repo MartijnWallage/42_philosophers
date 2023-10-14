@@ -1,34 +1,55 @@
-NAME = philo
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/14 16:38:57 by mwallage          #+#    #+#              #
+#    Updated: 2023/10/14 17:23:10 by mwallage         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-INC 	= includes/philo.h
+CC			:= cc
+CFLAGS		:= -Wall -Wextra -Werror -pthread
+SRCDIR		:= ./src
+OBJDIR		:= ./obj
+INCDIR		:= ./inc
+LIBFTDIR	:= ./lib
+LIBFT		:= $(LIBFTDIR)/libft.a
+HEADERS		:= -I $(INCDIR) -I $(LIBFTDIR)/inc
+LIBS		:= -L $(LIBFTDIR) -lft
+SRC			:= main.c
+SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
+OBJS		:= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+NAME		:= philo
 
-SRC		=	src/philo.c\
-			src/free_destroy.c\
-			src/init.c\
-			src/actions.c\
-			src/time_libc.c\
-			src/process.c\
+all: $(NAME)
 
-CC 		= gcc
+$(LIBFTDIR):
+	git clone https://github.com/MartijnWallage/42_libft.git $@
 
-FLAGS	= -Wall -Wextra -Werror -pthread
+$(LIBFT): $(LIBFTDIR)
+	make -C$(LIBFTDIR)
 
-OBJS 	= $(SRC:.c=.o)
+$(OBJDIR):
+	mkdir obj
 
-$(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJDIR) $(OBJS)
+	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $@
 
-all: $(NAME) $(OBJS) $(INC)
-
-%.o: %.c $(INC)
-		$(CC) $(FLAGS) -c $< -o $@
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR)/philo.h
+	$(CC) -c $(CFLAGS) $< -o $@ $(HEADERS)
 
 clean:
 	rm -rf $(OBJS)
+	make clean -C$(LIBFTDIR)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm $(NAME)
+	rmdir $(OBJDIR)
+	rm -rf $(LIBFTDIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all, clean, fclean, re
