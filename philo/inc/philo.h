@@ -25,25 +25,28 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
 typedef struct s_philo
 {
-	int	index;
-	int	last_meal;
-	int	time_to_eat;
-	int	time_to_die;
-	int	time_to_sleep;
-	int	nbr_meals;
+	pthread_t		thread;
+	int				index;
+	int				last_meal;
+	int				time_to_eat;
+	int				time_to_die;
+	int				time_to_sleep;
+	int				nbr_meals;
 	pthread_mutex_t	lock_print;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-}		t_philo;
+}					t_philo;
 
-typedef struct s_arg
+typedef struct s_table
 {
-	int	nbr_philos;
-	time_t	start_time;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	nbr_meals;
-}		t_arg;
+	int				nbr_philos;
+	time_t			start_time;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nbr_meals;
+	pthread_mutex_t	*forks;
+	t_philo			*philos;
+}					t_table;
 
 #endif
