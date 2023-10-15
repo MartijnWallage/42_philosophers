@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/10/15 20:11:08 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:27:10 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				last_meal;
+	time_t			birthtime;
 	bool			alive;
 	pthread_mutex_t	lock_print;
 	pthread_mutex_t	*left_fork;
@@ -42,7 +43,7 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				nbr_philos;
-	time_t			start_time;
+	time_t			dinnertime;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;

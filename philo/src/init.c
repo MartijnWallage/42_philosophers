@@ -8,7 +8,7 @@ int	init_args(int argc, char **argv, t_table *table)
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
-	table->start_time = ft_time();
+	table->dinnertime = ft_time();
 	if (argc == 6)
 		table->nbr_meals = ft_atoi(argv[5]);
 	else
@@ -43,7 +43,6 @@ int	init_philos(t_table *table)
 		table->philos[i].time_to_die = table->time_to_die;
 		table->philos[i].time_to_eat = table->time_to_eat;
 		table->philos[i].time_to_sleep = table->time_to_sleep;
-		table->philos[i].last_meal = table->start_time;
 		table->philos[i].alive = true;
 		pthread_mutex_init(&table->philos[i].lock_print, NULL);
 		table->philos[i].left_fork = NULL;
