@@ -15,11 +15,15 @@ CFLAGS		:= -Wall -Wextra -Werror -pthread
 SRCDIR		:= ./src
 OBJDIR		:= ./obj
 INCDIR		:= ./inc
-LIBFTDIR	:= ./lib
+LIBFTDIR	:= ./libft
 LIBFT		:= $(LIBFTDIR)/libft.a
 HEADERS		:= -I $(INCDIR) -I $(LIBFTDIR)/inc
 LIBS		:= -L $(LIBFTDIR) -lft
-SRC			:= main.c
+SRC			:= main.c \
+				init.c \
+				utils.c \
+				end.c \
+				dining.c
 SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJS		:= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 NAME		:= philo
@@ -36,7 +40,7 @@ $(OBJDIR):
 	mkdir obj
 
 $(NAME): $(LIBFT) $(OBJDIR) $(OBJS)
-	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR)/philo.h
 	$(CC) -c $(CFLAGS) $< -o $@ $(HEADERS)

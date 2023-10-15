@@ -18,7 +18,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <sys/time.h>
+# include "../libft/inc/libft.h"
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -27,11 +29,11 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				index;
-	int				last_meal;
-	int				time_to_eat;
 	int				time_to_die;
+	int				time_to_eat;
 	int				time_to_sleep;
-	int				nbr_meals;
+	int				last_meal;
+	bool			alive;
 	pthread_mutex_t	lock_print;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -47,6 +49,22 @@ typedef struct s_table
 	int				nbr_meals;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
+	pthread_t		monitor;
 }					t_table;
+
+/*	dining.c */
+void	*philosophize(void *param);
+void	*monitor(void *param);
+/*	end.c	*/
+void	end_threads(t_table *table);
+void	end_mutexes(t_table *table);
+void	free_all(t_table *table);
+/*	init.c	*/
+void	init_args(int argc, char **argv, t_table *table);
+void	init_philos(t_table *table);
+void	init_forks(t_table *table);
+void	init_monitor(t_table *table);
+/*	utils.c	*/
+long	ft_time(void);
 
 #endif

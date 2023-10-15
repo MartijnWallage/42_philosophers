@@ -27,19 +27,6 @@ int	is_valid(int argc, char *argv[])
 	return (1);
 }
 
-void	init_args(int argc, char **argv, t_table *table)
-{
-	table->start_time = 
-	table->nbr_philos = ft_atoi(argv[1]);
-	table->time_to_die = ft_atoi(argv[2]);
-	table->time_to_eat = ft_atoi(argv[3]);
-	table->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		table->nbr_meals = ft_atoi(argv[5]);
-	else
-		table->nbr_meals = -1;
-}
-
 int	main(int argc, char *argv[])
 {
 	t_table	table;
@@ -48,9 +35,9 @@ int	main(int argc, char *argv[])
 		return (handle_error(FORMAT));
 	printf("Ooooh philosophizing!\n");
 	init_args(argc, argv, &table);
+	init_forks(&table);
 	init_philos(&table);
-	init_mutexes(&table);
-	init_threads(&table);
+	init_monitor(&table);
 	end_threads(&table);
 	end_mutexes(&table);
 	free_all(&table);
