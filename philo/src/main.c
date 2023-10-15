@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/10/14 16:59:01 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:12:14 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,12 @@ int	main(int argc, char *argv[])
 	if (!is_valid(argc, argv))
 		return (handle_error(FORMAT));
 	printf("Ooooh philosophizing!\n");
-	init_args(argc, argv, &table);
-	init_forks(&table);
-	init_philos(&table);
+	if (!init_args(argc, argv, &table))
+		return (1);
+	if (!init_forks(&table))
+		return (1);
+	if (!init_philos(&table))
+		return (1);
 	init_monitor(&table);
 	end_threads(&table);
 	end_mutexes(&table);

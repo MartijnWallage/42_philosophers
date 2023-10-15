@@ -1,8 +1,10 @@
 #include "../inc/philo.h"
 
-void	init_args(int argc, char **argv, t_table *table)
+int	init_args(int argc, char **argv, t_table *table)
 {
 	table->nbr_philos = ft_atoi(argv[1]);
+	if (table->nbr_philos < 0)
+		return (0);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
@@ -11,25 +13,29 @@ void	init_args(int argc, char **argv, t_table *table)
 		table->nbr_meals = ft_atoi(argv[5]);
 	else
 		table->nbr_meals = -1;
+	return (1);
 }
 
-void	init_forks(t_table *table)
+int	init_forks(t_table *table)
 {
 	int	i;
 
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_philos);
-	// protect malloc
+	if (table->forks == NULL)
+		return (0);
 	i = -1;
 	while (++i < table->nbr_philos)
 		pthread_mutex_init(&(table->forks[i]), NULL);
+	return (1);
 }
 
-void	init_philos(t_table *table)
+int	init_philos(t_table *table)
 {
 	int	i;
 
 	table->philos = malloc(sizeof(t_philo) * table->nbr_philos);
-	// protect malloc
+	if (table->philos == NULL)
+		return (0);
 	i = -1;
 	while (++i < table->nbr_philos)
 	{
@@ -44,6 +50,7 @@ void	init_philos(t_table *table)
 		table->philos[i].right_fork = NULL;
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
+	return (1);
 }
 
 void	init_monitor(t_table *table)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/10/14 16:58:15 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:11:08 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	end_threads(t_table *table);
 void	end_mutexes(t_table *table);
 void	free_all(t_table *table);
 /*	init.c	*/
-void	init_args(int argc, char **argv, t_table *table);
-void	init_philos(t_table *table);
-void	init_forks(t_table *table);
+int	init_args(int argc, char **argv, t_table *table);
+int	init_philos(t_table *table);
+int	init_forks(t_table *table);
 void	init_monitor(t_table *table);
 /*	utils.c	*/
 long	ft_time(void);
