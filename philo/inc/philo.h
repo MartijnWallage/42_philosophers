@@ -29,16 +29,14 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				index;
+	int				nbr_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	long			last_meal;
 	int				nbr_meals;
 	time_t			start_time;
-	bool			alive;
-	bool			stop;
-	pthread_mutex_t	stop_lock;
-	pthread_mutex_t	alive_lock;
+	bool			*stop;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -51,7 +49,8 @@ typedef struct s_table
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				nbr_meals;
+	int				max_meals;
+	bool			stop;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
@@ -61,12 +60,13 @@ typedef struct s_table
 /*	dining.c	*/
 void	*philosophize(void *param);
 void	*monitor(void *param);
+bool	is_alive(t_philo *philo);
 /*	actions.c	*/
 void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
-void	die(t_philo	*philo);
+void	*die(t_philo *philo);
 /*	end.c	*/
 void	end_threads(t_table *table);
 void	end_mutexes(t_table *table);
