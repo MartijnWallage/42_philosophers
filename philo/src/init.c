@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
+/*   Updated: 2023/10/16 14:05:01 by mwallage         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 int	init_args(int argc, char **argv, t_table *table)
@@ -13,6 +25,7 @@ int	init_args(int argc, char **argv, t_table *table)
 		table->nbr_meals = ft_atoi(argv[5]);
 	else
 		table->nbr_meals = -1;
+	pthread_mutex_init(&(table->print), NULL);
 	return (1);
 }
 
@@ -44,9 +57,18 @@ int	init_philos(t_table *table)
 		table->philos[i].time_to_eat = table->time_to_eat;
 		table->philos[i].time_to_sleep = table->time_to_sleep;
 		table->philos[i].alive = true;
-		pthread_mutex_init(&table->philos[i].lock_print, NULL);
-		table->philos[i].left_fork = NULL;
-		table->philos[i].right_fork = NULL;
+		table->philos[i].stop = false;
+		table->philos[i].start_time = ft_time();
+		table->philos[i].last_meal = table->philos[i].start_time;
+		table->philos[i].nbr_meals = 0;
+		table->philos[i].print = &(table->print);
+		table->philos[i].left_fork = &table->forks[i];
+		if (i + 1 < table->nbr_philos)
+			table->philos[i].right_fork = &table->forks[i + 1];
+		else
+			table->philos[i].right_fork = &table->forks[0];
+		pthread_mutex_init(&(table->philos[i].alive_lock), NULL);
+		pthread_mutex_init(&(table->philos[i].stop_lock), NULL);
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
 	return (1);

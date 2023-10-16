@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   end.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 14:04:51 by mwallage          #+#    #+#             */
+/*   Updated: 2023/10/16 14:04:54 by mwallage         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
 void	end_threads(t_table *table)
@@ -20,6 +32,8 @@ void	end_mutexes(t_table *table)
 		pthread_mutex_unlock(&table->forks[i]);
 		pthread_mutex_destroy(&table->forks[i]);
 	}
+	pthread_mutex_unlock(&table->print);
+	pthread_mutex_destroy(&table->print);
 }
 
 void	free_all(t_table *table)

@@ -14,10 +14,19 @@
 
 long	ft_time(void)
 {
-	struct timeval	timeval;
+	struct timeval	tv;
 	long			res;
 
-	gettimeofday(&timeval, NULL);
-	res = 1000 * (size_t)timeval.tv_sec + (size_t)timeval.tv_usec / 1000;
+	gettimeofday(&tv, NULL);
+	res = 1000 * (size_t)tv.tv_sec + (size_t)tv.tv_usec / 1000;
 	return (res);
+}
+
+void	ft_usleep(int milliseconds)
+{
+	long	time;
+
+	time = ft_time();
+	while (ft_time() < time + milliseconds)
+		usleep(milliseconds / 100);
 }

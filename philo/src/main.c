@@ -36,6 +36,13 @@ int	main(int argc, char *argv[])
 	printf("Ooooh philosophizing!\n");
 	if (!init_args(argc, argv, &table))
 		return (1);
+	pthread_mutex_lock(&(table.print));
+	printf("Dinner started at %ld.\n", table.dinnertime);
+	printf("There are %d philosophers.\n", table.nbr_philos);
+	printf("Each can survive for %d milliseconds without eating.\n", table.time_to_die);
+	printf("Each takes %d milliseconds to eat.\n", table.time_to_eat);
+	printf("Each sleeps for %d milliseconds.\n", table.time_to_sleep);
+	pthread_mutex_unlock(&(table.print));
 	if (!init_forks(&table))
 		return (1);
 	if (!init_philos(&table))
