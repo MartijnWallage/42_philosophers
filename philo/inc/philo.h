@@ -32,7 +32,7 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				last_meal;
+	long			last_meal;
 	int				nbr_meals;
 	time_t			start_time;
 	bool			alive;

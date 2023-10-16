@@ -60,7 +60,7 @@ void	*monitor(void *param)
 	i = 0;
 	while (1)
 	{
-		if (ft_time() - table->philos[i].last_meal > table->philos[i].time_to_die)
+		if (ft_time() - table->philos[i].last_meal > (long)table->philos[i].time_to_die)
 		{
 			die(&(table->philos[i]));
 			i = -1;
