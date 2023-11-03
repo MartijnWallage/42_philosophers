@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 13:03:21 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:24:38 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	*philosophize(void *param)
 	philo->start_time = ft_time();
 	philo->last_meal = philo->start_time;
 	i = 0;
-	while (!*(philo->stop))
+	while (!*(philo->someone_died))
 	{
-		if (i % 4 == 0 && !*(philo->stop))
+		if (i % 4 == 0 && !*(philo->someone_died))
 			think(philo);
-		else if (i % 4 == 1 && !*(philo->stop))
+		else if (i % 4 == 1 && !*(philo->someone_died))
 			take_forks(philo);
-		else if (i % 4 == 2 && !*(philo->stop))
+		else if (i % 4 == 2 && !*(philo->someone_died))
 			eat(philo);
-		else if (i % 4 == 3 && !*(philo->stop))
+		else if (i % 4 == 3 && !*(philo->someone_died))
 			philo_sleep(philo);
 		i++;
 	}
@@ -38,7 +38,7 @@ void	*philosophize(void *param)
 
 void	*die(t_philo *philo)
 {
-	*(philo->stop) = true;
+	*(philo->someone_died) = true;
 	pthread_mutex_lock(philo->print);
 	printf("%ld %d has died\n", \
 		ft_time() - philo->start_time, philo->index + 1);
@@ -60,7 +60,7 @@ void	*monitor(void *param)
 	pthread_mutex_lock(&(table->print));
 	pthread_mutex_unlock(&(table->print));
 	i = 0;
-	while (is_alive(&(table->philos[i])))
+	while (!table->all_sated && is_alive(&(table->philos[i])))
 	{
 		if (i + 1 < table->nbr_philos)
 			i++;

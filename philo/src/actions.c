@@ -6,20 +6,27 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 13:05:34 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:25:46 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
  
+bool	is_last_philo(t_philo *philo)
+{
+	if (philo->index == philo->nbr_philos - 1)
+		return (true);
+	return (false);
+}
+
 void	take_forks(t_philo *philo)
 {
-	if (philo->index % 2 == 0 && philo->index + 1 < philo->nbr_philos)
+	if (philo->index % 2 == 0 && !is_last_philo(philo))
 	{
-		pthread_mutex_lock(philo->print);
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(philo->right_fork);
-		if (*(philo->stop))
+		pthread_mutex_lock(philo->print);
+		if (*(philo->someone_died))
 		{
 			pthread_mutex_unlock(philo->right_fork);
 			pthread_mutex_unlock(philo->left_fork);
@@ -34,10 +41,10 @@ void	take_forks(t_philo *philo)
 	}
 	else
 	{
-		pthread_mutex_lock(philo->print);
 		pthread_mutex_lock(philo->right_fork);
 		pthread_mutex_lock(philo->left_fork);
-		if (*(philo->stop))
+		pthread_mutex_lock(philo->print);
+		if (*(philo->someone_died))
 		{
 			pthread_mutex_unlock(philo->left_fork);
 			pthread_mutex_unlock(philo->right_fork);
@@ -55,11 +62,20 @@ void	take_forks(t_philo *philo)
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->print);
-	if (*philo->stop)
+	if (*philo->someone_died)
 	{
 		pthread_mutex_unlock(philo->print);
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
+		if (philo->index % 2 == 0 && !is_last_philo(philo))
+		{
+			pthread_mutex_unlock(philo->right_fork);
+			pthread_mutex_unlock(philo->left_fork);
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
+		}
+		pthread_mutex_unlock(philo->print);
 		return ;
 	}
 	printf("%ld %d is eating\n", \
@@ -75,7 +91,7 @@ void	eat(t_philo *philo)
 void	philo_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(philo->print);
-	if (*philo->stop)
+	if (*philo->someone_died)
 	{
 		pthread_mutex_unlock(philo->print);
 		return ;
@@ -89,7 +105,7 @@ void	philo_sleep(t_philo *philo)
 void	think(t_philo *philo)
 {
 	pthread_mutex_lock(philo->print);
-	if (*philo->stop)
+	if (*philo->someone_died)
 	{
 		pthread_mutex_unlock(philo->print);
 		return ;

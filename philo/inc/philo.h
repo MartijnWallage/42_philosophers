@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 12:58:05 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:08:08 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_philo
 	int				time_to_sleep;
 	long			last_meal;
 	int				nbr_meals;
+	int				max_meals;
 	time_t			start_time;
-	bool			*stop;
+	bool			*someone_died;
+	bool			*all_sated;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -50,7 +52,8 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_meals;
-	bool			stop;
+	bool			someone_died;
+	bool			all_sated;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;

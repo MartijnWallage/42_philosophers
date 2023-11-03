@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/10/16 14:05:01 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:25:20 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ int	init_args(int argc, char **argv, t_table *table)
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
-	table->dinnertime = ft_time();
 	if (argc == 6)
 		table->max_meals = ft_atoi(argv[5]);
 	else
 		table->max_meals = -1;
+	table->all_sated = false;
 	pthread_mutex_init(&(table->print), NULL);
-	table->stop = false;
+	table->someone_died = false;
+	table->dinnertime = ft_time();
 	return (1);
 }
 
@@ -58,10 +59,12 @@ int	init_philos(t_table *table)
 		table->philos[i].time_to_die = table->time_to_die;
 		table->philos[i].time_to_eat = table->time_to_eat;
 		table->philos[i].time_to_sleep = table->time_to_sleep;
-		table->philos[i].stop = &(table->stop);
+		table->philos[i].someone_died = &(table->someone_died);
 		table->philos[i].start_time = ft_time();
 		table->philos[i].last_meal = table->philos[i].start_time;
 		table->philos[i].nbr_meals = 0;
+		table->philos[i].max_meals = table->max_meals;
+		table->philos[i].all_sated = &(table->all_sated);
 		table->philos[i].print = &(table->print);
 		table->philos[i].left_fork = &table->forks[i];
 		if (i + 1 < table->nbr_philos)
