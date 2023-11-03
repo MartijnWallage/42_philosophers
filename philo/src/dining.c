@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dining.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/10/16 14:04:46 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:03:21 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	*philosophize(void *param)
 	return (NULL);
 }
 
-void	*die(t_philo	*philo)
+void	*die(t_philo *philo)
 {
+	*(philo->stop) = true;
 	pthread_mutex_lock(philo->print);
 	printf("%ld %d has died\n", \
 		ft_time() - philo->start_time, philo->index + 1);
 	pthread_mutex_unlock(philo->print);
-	*(philo->stop) = true;
 	return (NULL);
 }
 
