@@ -21,34 +21,44 @@ void	*philosophize(void *param)
 	philo->start_time = ft_time();
 	philo->last_meal = philo->start_time;
 	i = 0;
-	while (!*(philo->someone_died))
+	while (philo->nbr_meals < philo->max_meals)
 	{
-		if (i % 4 == 0 && !*(philo->someone_died))
+		if (i % 4 == 0)
 			think(philo);
-		else if (i % 4 == 1 && !*(philo->someone_died))
+		else if (i % 4 == 1)
 			take_forks(philo);
-		else if (i % 4 == 2 && !*(philo->someone_died))
+		else if (i % 4 == 2)
 			eat(philo);
-		else if (i % 4 == 3 && !*(philo->someone_died))
+		else if (i % 4 == 3)
 			philo_sleep(philo);
 		i++;
 	}
 	return (NULL);
 }
 
-void	*die(t_philo *philo)
+void	die(t_philo *philo)
 {
 	*(philo->someone_died) = true;
 	pthread_mutex_lock(philo->print);
 	printf("%ld %d has died\n", \
 		ft_time() - philo->start_time, philo->index + 1);
 	pthread_mutex_unlock(philo->print);
-	return (NULL);
 }
 
 bool	is_alive(t_philo *philo)
 {
 	return (ft_time() - philo->last_meal < (long)philo->time_to_die);
+}
+
+bool	someone_is_hungry(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->nbr_philos)
+		if (table->philos[i].nbr_meals < table->max_meals)
+			return (true);
+	return (false);
 }
 
 void	*monitor(void *param)
@@ -60,12 +70,15 @@ void	*monitor(void *param)
 	pthread_mutex_lock(&(table->print));
 	pthread_mutex_unlock(&(table->print));
 	i = 0;
-	while (!table->all_sated && is_alive(&(table->philos[i])))
+	while (is_alive(&table->philos[i]))
 	{
+		if (!someone_is_hungry(table))
+			return (NULL);
 		if (i + 1 < table->nbr_philos)
 			i++;
 		else
 			i = 0;
 	}
-	return (die(&(table->philos[i])));
+	die(&table->philos[i]);
+	return (NULL);
 }

@@ -22,6 +22,24 @@
 # include <sys/time.h>
 # include "../libft/inc/libft.h"
 
+#define RESET		"\033[0m"
+#define BASE(X)		"\033[0;3"X"m"
+#define BOLD(X)		"\033[3"X";1m"
+#define FAINT(X)	"\033[3"X";2m"
+#define	ITALIC(X)	"\033[3"X";3m"
+#define UNDERLINE(X)	"\033["X";4m"
+#define BLINK(X)	"\033[3"X";5m"
+#define NORMAL(X)	"\033[3"X";6m"
+#define NEGATIVE(X)	"\033[3"X";7m"
+#define BLACK	"0"
+#define RED		"1"
+#define GREEN	"2"
+#define YELLOW	"3"
+#define BLUE	"4"
+#define PINK	"5"
+#define TEAL	"6"
+#define WHITE	"7"
+
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
@@ -69,7 +87,7 @@ void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
-void	*die(t_philo *philo);
+void	die(t_philo *philo);
 /*	end.c	*/
 void	end_threads(t_table *table);
 void	end_mutexes(t_table *table);

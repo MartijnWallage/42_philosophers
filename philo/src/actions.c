@@ -19,6 +19,28 @@ bool	is_last_philo(t_philo *philo)
 	return (false);
 }
 
+void	print_normal(t_philo *philo)
+{
+	if (philo->index % 6 == 0)
+		printf(NORMAL(RED)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 1)
+		printf(NORMAL(YELLOW)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 2)
+		printf(NORMAL(BLUE)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 3)
+		printf(NORMAL(PINK)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 4)
+		printf(NORMAL(TEAL)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 5)
+		printf(NORMAL(WHITE)"%ld %d has taken a fork\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+}
+
 void	take_forks(t_philo *philo)
 {
 	if (philo->index % 2 == 0 && !is_last_philo(philo))
@@ -33,10 +55,8 @@ void	take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->print);
 			return ;
 		}
-		printf("%ld %d has taken a fork\n", \
-			ft_time() - philo->start_time, philo->index + 1);
-		printf("%ld %d has taken a fork\n", \
-			ft_time() - philo->start_time, philo->index + 1);
+		print_normal(philo);
+		print_normal(philo);
 		pthread_mutex_unlock(philo->print);
 	}
 	else
@@ -51,12 +71,32 @@ void	take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->print);
 			return ;
 		}
-		printf("%ld %d has taken a fork\n", \
-			ft_time() - philo->start_time, philo->index + 1);
-		printf("%ld %d has taken a fork\n", \
-			ft_time() - philo->start_time, philo->index + 1);
+		print_normal(philo);
+		print_normal(philo);
 		pthread_mutex_unlock(philo->print);
 	}
+}
+
+void	print_negative(t_philo *philo)
+{
+	if (philo->index % 6 == 0)
+		printf(NEGATIVE(RED)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 1)
+		printf(NEGATIVE(YELLOW)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 2)
+		printf(NEGATIVE(BLUE)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 3)
+		printf(NEGATIVE(PINK)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 4)
+		printf(NEGATIVE(TEAL)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 5)
+		printf(NEGATIVE(WHITE)"%ld %d is eating\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
 }
 
 void	eat(t_philo *philo)
@@ -78,14 +118,35 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%ld %d is eating\n", \
-		ft_time() - philo->start_time, philo->index + 1);
+	print_negative(philo);
 	pthread_mutex_unlock(philo->print);
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
 	ft_usleep(philo->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+}
+
+void	print_faint(t_philo *philo)
+{
+	if (philo->index % 6 == 0)
+		printf(FAINT(RED)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 1)
+		printf(FAINT(YELLOW)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 2)
+		printf(FAINT(BLUE)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 3)
+		printf(FAINT(PINK)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 4)
+		printf(FAINT(TEAL)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 5)
+		printf(FAINT(WHITE)"%ld %d is sleeping\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
 }
 
 void	philo_sleep(t_philo *philo)
@@ -96,10 +157,31 @@ void	philo_sleep(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%ld %d is sleeping\n", \
-		ft_time() - philo->start_time, philo->index + 1);
+	print_faint(philo);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->time_to_sleep);
+}
+
+void	print_italic(t_philo *philo)
+{
+	if (philo->index % 6 == 0)
+		printf(ITALIC(RED)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 1)
+		printf(ITALIC(YELLOW)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 2)
+		printf(ITALIC(BLUE)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 3)
+		printf(ITALIC(PINK)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 4)
+		printf(ITALIC(TEAL)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 5)
+		printf(ITALIC(WHITE)"%ld %d is thinking\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
 }
 
 void	think(t_philo *philo)
@@ -110,7 +192,6 @@ void	think(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%ld %d is thinking\n", \
-		ft_time() - philo->start_time, philo->index + 1);
+	print_italic(philo);
 	pthread_mutex_unlock(philo->print);
 }
