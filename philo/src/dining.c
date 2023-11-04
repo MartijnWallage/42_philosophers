@@ -12,6 +12,13 @@
 
 #include "../inc/philo.h"
 
+bool	has_eaten_enough(t_philo *philo)
+{
+	if (philo->max_meals == -1)
+		return (false);
+	return (philo->nbr_meals >= philo->max_meals);
+}
+
 void	*philosophize(void *param)
 {
 	t_philo	*philo;
@@ -21,7 +28,7 @@ void	*philosophize(void *param)
 	philo->start_time = ft_time();
 	philo->last_meal = philo->start_time;
 	i = 0;
-	while (philo->nbr_meals < philo->max_meals)
+	while (!philo->someone_died && !has_eaten_enough(philo))
 	{
 		if (i % 4 == 0)
 			think(philo);
@@ -36,12 +43,33 @@ void	*philosophize(void *param)
 	return (NULL);
 }
 
+void	print_underline(t_philo *philo)
+{
+	if (philo->index % 6 == 0)
+		printf(UNDERLINE(RED)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 1)
+		printf(UNDERLINE(YELLOW)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 2)
+		printf(UNDERLINE(BLUE)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 3)
+		printf(UNDERLINE(PINK)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 4)
+		printf(UNDERLINE(TEAL)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+	else if (philo->index % 6 == 5)
+		printf(UNDERLINE(WHITE)"%ld %d has died\n"RESET, \
+			ft_time() - philo->start_time, philo->index + 1);
+}
+
 void	die(t_philo *philo)
 {
 	*(philo->someone_died) = true;
 	pthread_mutex_lock(philo->print);
-	printf("%ld %d has died\n", \
-		ft_time() - philo->start_time, philo->index + 1);
+	print_underline(philo);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -56,7 +84,7 @@ bool	someone_is_hungry(t_table *table)
 
 	i = -1;
 	while (++i < table->nbr_philos)
-		if (table->philos[i].nbr_meals < table->max_meals)
+		if (!has_eaten_enough(&table->philos[i]))
 			return (true);
 	return (false);
 }
@@ -67,8 +95,6 @@ void	*monitor(void *param)
 	int		i;
 
 	table = (t_table *)param;
-	pthread_mutex_lock(&(table->print));
-	pthread_mutex_unlock(&(table->print));
 	i = 0;
 	while (is_alive(&table->philos[i]))
 	{

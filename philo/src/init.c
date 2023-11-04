@@ -24,7 +24,6 @@ int	init_args(int argc, char **argv, t_table *table)
 		table->max_meals = ft_atoi(argv[5]);
 	else
 		table->max_meals = -1;
-	table->all_sated = false;
 	pthread_mutex_init(&(table->print), NULL);
 	table->someone_died = false;
 	table->dinnertime = ft_time();
@@ -64,7 +63,6 @@ int	init_philos(t_table *table)
 		table->philos[i].last_meal = table->philos[i].start_time;
 		table->philos[i].nbr_meals = 0;
 		table->philos[i].max_meals = table->max_meals;
-		table->philos[i].all_sated = &(table->all_sated);
 		table->philos[i].print = &(table->print);
 		table->philos[i].left_fork = &table->forks[i];
 		if (i + 1 < table->nbr_philos)

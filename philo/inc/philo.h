@@ -56,7 +56,6 @@ typedef struct s_philo
 	int				max_meals;
 	time_t			start_time;
 	bool			*someone_died;
-	bool			*all_sated;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -71,7 +70,6 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				max_meals;
 	bool			someone_died;
-	bool			all_sated;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
