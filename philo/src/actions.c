@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 12:01:17 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 12:42:05 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	take_forks_else(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	print_normal(philo);
-	print_normal(philo);
+	print_action(philo, FORK);
+	print_action(philo, FORK);
 	pthread_mutex_unlock(philo->print);
 }
 
@@ -43,8 +43,8 @@ void	take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->print);
 			return ;
 		}
-		print_normal(philo);
-		print_normal(philo);
+		print_action(philo, FORK);
+		print_action(philo, FORK);
 		pthread_mutex_unlock(philo->print);
 	}
 	else
@@ -70,7 +70,7 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	print_negative(philo);
+	print_action(philo, EAT);
 	pthread_mutex_unlock(philo->print);
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
@@ -87,7 +87,7 @@ void	philo_sleep(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	print_faint(philo);
+	print_action(philo, SLEEP);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->time_to_sleep);
 }
@@ -100,6 +100,6 @@ void	think(t_philo *philo)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	print_italic(philo);
+	print_action(philo, THINK);
 	pthread_mutex_unlock(philo->print);
 }

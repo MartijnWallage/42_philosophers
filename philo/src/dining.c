@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 11:57:39 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 12:40:38 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	*philosophize(void *param)
 	while (!*philo->someone_died && !has_eaten_enough(philo))
 	{
 		if (i % 4 == 0)
-			think(philo);
-		else if (i % 4 == 1)
 			take_forks(philo);
-		else if (i % 4 == 2)
+		else if (i % 4 == 1)
 			eat(philo);
-		else if (i % 4 == 3)
+		else if (i % 4 == 2)
 			philo_sleep(philo);
+		else if (i % 4 == 3)
+			think(philo);
 		i++;
 	}
 	return (NULL);
@@ -47,7 +47,7 @@ void	die(t_philo *philo)
 {
 	*(philo->someone_died) = true;
 	pthread_mutex_lock(philo->print);
-	print_underline(philo);
+	print_action(philo, DIED);
 	pthread_mutex_unlock(philo->print);
 }
 

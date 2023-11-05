@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 11:59:01 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 12:44:25 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,25 @@
 # include "../libft/inc/libft.h"
 
 #define RESET		"\033[0m"
-#define BASE(X)		"\033[0;3"X"m"
-#define BOLD(X)		"\033[3"X";1m"
-#define FAINT(X)	"\033[3"X";2m"
-#define	ITALIC(X)	"\033[3"X";3m"
-#define UNDERLINE(X)	"\033[3"X";4m"
-#define BLINK(X)	"\033[3"X";5m"
-#define NORMAL(X)	"\033[3"X";6m"
-#define NEGATIVE(X)	"\033[3"X";7m"
-#define BLACK	"0"
-#define RED		"1"
-#define GREEN	"2"
-#define YELLOW	"3"
-#define BLUE	"4"
-#define PINK	"5"
-#define TEAL	"6"
-#define WHITE	"7"
+#define BOLD		";1m"
+#define FAINT		";2m"
+#define ITALIC		";3m"
+#define UNDERLINE	";4m"
+#define NORMAL		";6m"
+#define NEGATIVE	";7m"
+#define BLACK		"0"
+#define RED			"1"
+#define GREEN		"2"
+#define YELLOW		"3"
+#define BLUE		"4"
+#define PINK		"5"
+#define TEAL		"6"
+#define WHITE		"7"
+#define FORK	"has taken a fork"
+#define EAT		"is eating"
+#define THINK	"is thinking"
+#define SLEEP	"is sleeping"
+#define DIED	"has died"
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -100,10 +103,6 @@ long	ft_time(void);
 void	ft_usleep(int milliseconds);
 bool	is_last_philo(t_philo *philo);
 /*	print.c	*/
-void	print_underline(t_philo *philo);
-void	print_normal(t_philo *philo);
-void	print_negative(t_philo *philo);
-void	print_faint(t_philo *philo);
-void	print_italic(t_philo *philo);
+void	print_action(t_philo *philo, const char *action);
 
 #endif
