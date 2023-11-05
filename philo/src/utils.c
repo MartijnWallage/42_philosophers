@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 11:58:47 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:19:07 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,17 @@ void	ft_usleep(int milliseconds)
 		usleep(milliseconds / 100);
 }
 
-bool	is_last_philo(t_philo *philo)
+void	unlock_forks(t_philo *philo)
 {
-	if (philo->index == philo->nbr_philos - 1)
-		return (true);
-	return (false);
+	if (philo->index % 2 == 0 && !is_last_philo(philo))
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	philo->has_forks = false;
 }

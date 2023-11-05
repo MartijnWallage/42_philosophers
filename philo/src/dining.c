@@ -6,18 +6,11 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 12:40:38 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:21:37 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-bool	has_eaten_enough(t_philo *philo)
-{
-	if (philo->max_meals == -1)
-		return (false);
-	return (philo->nbr_meals >= philo->max_meals);
-}
 
 void	*philosophize(void *param)
 {
@@ -28,7 +21,7 @@ void	*philosophize(void *param)
 	philo->start_time = ft_time();
 	philo->last_meal = philo->start_time;
 	i = 0;
-	while (!*philo->someone_died && !has_eaten_enough(philo))
+	while (!*philo->someone_died && is_hungry(philo))
 	{
 		if (i % 4 == 0)
 			take_forks(philo);
@@ -40,33 +33,18 @@ void	*philosophize(void *param)
 			think(philo);
 		i++;
 	}
+	if (philo->has_forks)
+		unlock_forks(philo);
 	return (NULL);
 }
 
-void	die(t_philo *philo)
+static void	*die(t_philo *philo)
 {
 	*(philo->someone_died) = true;
 	pthread_mutex_lock(philo->print);
 	print_action(philo, DIED);
 	pthread_mutex_unlock(philo->print);
-}
-
-bool	is_alive(t_philo *philo)
-{
-	return (ft_time() - philo->last_meal < (long)philo->time_to_die);
-}
-
-bool	someone_is_hungry(t_table *table)
-{
-	int	i;
-
-	if (table->max_meals == -1)
-		return (true);
-	i = -1;
-	while (++i < table->nbr_philos)
-		if (!has_eaten_enough(&table->philos[i]))
-			return (true);
-	return (false);
+	return (NULL);
 }
 
 void	*monitor(void *param)
@@ -76,13 +54,17 @@ void	*monitor(void *param)
 
 	table = (t_table *)param;
 	i = 0;
-	while (is_alive(&table->philos[i]))
+	while (1)
 	{
+		if (!is_alive(&table->philos[i]))
+		{
+			die(&table->philos[i]);
+			break;
+		}
 		if (!someone_is_hungry(table))
-			return (NULL);
+			break ;
 		if (++i == table->nbr_philos)
 			i = 0;
 	}
-	die(&table->philos[i]);
 	return (NULL);
 }

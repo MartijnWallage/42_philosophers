@@ -6,7 +6,7 @@
 #    By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 16:38:57 by mwallage          #+#    #+#              #
-#    Updated: 2023/11/05 11:19:46 by mwallage         ###   ########.fr        #
+#    Updated: 2023/11/05 16:38:32 by mwallage         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC			:= main.c \
 				end.c \
 				dining.c \
 				actions.c \
-				print.c
+				print.c \
+				checks.c
 SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJS		:= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 NAME		:= philo

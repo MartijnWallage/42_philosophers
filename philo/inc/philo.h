@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 12:44:25 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:17:51 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_philo
 	long			last_meal;
 	int				nbr_meals;
 	int				max_meals;
+	bool			has_forks;
 	time_t			start_time;
 	bool			*someone_died;
 	pthread_mutex_t	*print;
@@ -82,13 +83,11 @@ typedef struct s_table
 /*	dining.c	*/
 void	*philosophize(void *param);
 void	*monitor(void *param);
-bool	is_alive(t_philo *philo);
 /*	actions.c	*/
 void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
-void	die(t_philo *philo);
 /*	end.c	*/
 void	end_threads(t_table *table);
 void	end_mutexes(t_table *table);
@@ -98,10 +97,15 @@ int		init_args(int argc, char **argv, t_table *table);
 int		init_philos(t_table *table);
 int		init_forks(t_table *table);
 void	init_monitor(t_table *table);
+/*	checks.c	*/
+bool	someone_is_hungry(t_table *table);
+bool	is_hungry(t_philo *philo);
+bool	is_alive(t_philo *philo);
+bool	is_last_philo(t_philo *philo);
 /*	utils.c	*/
 long	ft_time(void);
 void	ft_usleep(int milliseconds);
-bool	is_last_philo(t_philo *philo);
+void	unlock_forks(t_philo *philo);
 /*	print.c	*/
 void	print_action(t_philo *philo, const char *action);
 

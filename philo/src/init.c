@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 12:04:37 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:13:25 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	init_philos(t_table *table)
 		table->philos[i].max_meals = table->max_meals;
 		table->philos[i].print = &(table->print);
 		table->philos[i].right_fork = &table->forks[i];
-		if (i + 1 < table->nbr_philos)
+		table->philos[i].has_forks = false;
+		if (!is_last_philo(&table->philos[i]))
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
