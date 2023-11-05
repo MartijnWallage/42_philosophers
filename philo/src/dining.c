@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 17:24:38 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:57:39 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*philosophize(void *param)
 	philo->start_time = ft_time();
 	philo->last_meal = philo->start_time;
 	i = 0;
-	while (!philo->someone_died && !has_eaten_enough(philo))
+	while (!*philo->someone_died && !has_eaten_enough(philo))
 	{
 		if (i % 4 == 0)
 			think(philo);
@@ -41,28 +41,6 @@ void	*philosophize(void *param)
 		i++;
 	}
 	return (NULL);
-}
-
-void	print_underline(t_philo *philo)
-{
-	if (philo->index % 6 == 0)
-		printf(UNDERLINE(RED)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
-	else if (philo->index % 6 == 1)
-		printf(UNDERLINE(YELLOW)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
-	else if (philo->index % 6 == 2)
-		printf(UNDERLINE(BLUE)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
-	else if (philo->index % 6 == 3)
-		printf(UNDERLINE(PINK)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
-	else if (philo->index % 6 == 4)
-		printf(UNDERLINE(TEAL)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
-	else if (philo->index % 6 == 5)
-		printf(UNDERLINE(WHITE)"%ld %d has died\n"RESET, \
-			ft_time() - philo->start_time, philo->index + 1);
 }
 
 void	die(t_philo *philo)
@@ -82,6 +60,8 @@ bool	someone_is_hungry(t_table *table)
 {
 	int	i;
 
+	if (table->max_meals == -1)
+		return (true);
 	i = -1;
 	while (++i < table->nbr_philos)
 		if (!has_eaten_enough(&table->philos[i]))
@@ -100,9 +80,7 @@ void	*monitor(void *param)
 	{
 		if (!someone_is_hungry(table))
 			return (NULL);
-		if (i + 1 < table->nbr_philos)
-			i++;
-		else
+		if (++i == table->nbr_philos)
 			i = 0;
 	}
 	die(&table->philos[i]);

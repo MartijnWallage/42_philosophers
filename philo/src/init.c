@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 17:25:20 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 12:04:37 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ int	init_philos(t_table *table)
 		table->philos[i].time_to_eat = table->time_to_eat;
 		table->philos[i].time_to_sleep = table->time_to_sleep;
 		table->philos[i].someone_died = &(table->someone_died);
-		table->philos[i].start_time = ft_time();
-		table->philos[i].last_meal = table->philos[i].start_time;
 		table->philos[i].nbr_meals = 0;
 		table->philos[i].max_meals = table->max_meals;
 		table->philos[i].print = &(table->print);
-		table->philos[i].left_fork = &table->forks[i];
+		table->philos[i].right_fork = &table->forks[i];
 		if (i + 1 < table->nbr_philos)
-			table->philos[i].right_fork = &table->forks[i + 1];
+			table->philos[i].left_fork = &table->forks[i + 1];
 		else
-			table->philos[i].right_fork = &table->forks[0];
+			table->philos[i].left_fork = &table->forks[0];
+		table->philos[i].start_time = ft_time();
+		table->philos[i].last_meal = table->philos[i].start_time;
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
 	return (1);

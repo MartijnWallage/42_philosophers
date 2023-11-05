@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/03 17:08:08 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:59:01 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #define BOLD(X)		"\033[3"X";1m"
 #define FAINT(X)	"\033[3"X";2m"
 #define	ITALIC(X)	"\033[3"X";3m"
-#define UNDERLINE(X)	"\033["X";4m"
+#define UNDERLINE(X)	"\033[3"X";4m"
 #define BLINK(X)	"\033[3"X";5m"
 #define NORMAL(X)	"\033[3"X";6m"
 #define NEGATIVE(X)	"\033[3"X";7m"
@@ -98,5 +98,12 @@ void	init_monitor(t_table *table);
 /*	utils.c	*/
 long	ft_time(void);
 void	ft_usleep(int milliseconds);
+bool	is_last_philo(t_philo *philo);
+/*	print.c	*/
+void	print_underline(t_philo *philo);
+void	print_normal(t_philo *philo);
+void	print_negative(t_philo *philo);
+void	print_faint(t_philo *philo);
+void	print_italic(t_philo *philo);
 
 #endif
