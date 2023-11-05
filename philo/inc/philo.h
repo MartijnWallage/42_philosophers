@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:17:51 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:52:10 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 #define EAT		"is eating"
 #define THINK	"is thinking"
 #define SLEEP	"is sleeping"
-#define DIED	"has died"
+#define DIED	"died"
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -58,7 +58,7 @@ typedef struct s_philo
 	int				nbr_meals;
 	int				max_meals;
 	bool			has_forks;
-	time_t			start_time;
+	time_t			*dinnertime;
 	bool			*someone_died;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*left_fork;
@@ -106,6 +106,7 @@ bool	is_last_philo(t_philo *philo);
 long	ft_time(void);
 void	ft_usleep(int milliseconds);
 void	unlock_forks(t_philo *philo);
+void	lock_forks(t_philo *philo);
 /*	print.c	*/
 void	print_action(t_philo *philo, const char *action);
 

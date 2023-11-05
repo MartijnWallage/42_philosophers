@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:35:37 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 16:37:12 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:44:44 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	someone_is_hungry(t_table *table)
 		return (true);
 	i = -1;
 	while (++i < table->nbr_philos)
-		if (is_hungry(&table->philos[i]))
+		if (table->philos[i].nbr_meals < table->max_meals)
 			return (true);
 	return (false);
 }

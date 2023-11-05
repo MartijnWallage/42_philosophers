@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 12:48:43 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:41:42 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ void	print_action(t_philo *philo, const char *action)
 	print_color(philo->index);
 	print_effect(action);
 	printf("%ld %d %s\n", \
-		ft_time() - philo->start_time, philo->index + 1, action);	
+		ft_time() - *philo->dinnertime, philo->index + 1, action);	
 	printf(RESET"");
 }

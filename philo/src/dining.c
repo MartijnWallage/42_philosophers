@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:21:37 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:06:31 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*philosophize(void *param)
 	char	i;
 
 	philo = (t_philo *)param;
-	philo->start_time = ft_time();
-	philo->last_meal = philo->start_time;
+	if (philo->nbr_philos == 1)
+		return (NULL);
 	i = 0;
 	while (!*philo->someone_died && is_hungry(philo))
 	{
@@ -59,7 +59,7 @@ void	*monitor(void *param)
 		if (!is_alive(&table->philos[i]))
 		{
 			die(&table->philos[i]);
-			break;
+			break ;
 		}
 		if (!someone_is_hungry(table))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:21:42 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:12:55 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_valid(int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
 		return (0);
-	if (ft_atoi(argv[1]) == 0)
+ 	if (ft_atoi(argv[1]) == 0)
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:51 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:21:56 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:09:23 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	end_threads(t_table *table)
 {
 	int	i;
 
+	pthread_join(table->monitor, NULL);
 	i = -1;
 	while (++i < table->nbr_philos)
 		pthread_join(table->philos[i].thread, NULL);
-	pthread_join(table->monitor, NULL);
 }
 
 void	end_mutexes(t_table *table)
@@ -28,11 +28,7 @@ void	end_mutexes(t_table *table)
 
 	i = -1;
 	while (++i < table->nbr_philos)
-	{
-		pthread_mutex_unlock(&table->forks[i]);
 		pthread_mutex_destroy(&table->forks[i]);
-	}
-	pthread_mutex_unlock(&table->print);
 	pthread_mutex_destroy(&table->print);
 }
 

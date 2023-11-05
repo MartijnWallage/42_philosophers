@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:13:25 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:41:10 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	init_philos(t_table *table)
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
-		table->philos[i].start_time = ft_time();
-		table->philos[i].last_meal = table->philos[i].start_time;
+		table->philos[i].dinnertime = &table->dinnertime;
+		table->philos[i].last_meal = table->dinnertime;
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
 	return (1);
