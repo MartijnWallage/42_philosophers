@@ -15,14 +15,13 @@
 void	take_forks(t_philo *philo)
 {
 	lock_forks(philo);
-	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_lock(philo->table->death_lock);
  	if (philo->table->someone_died)
 	{
 		pthread_mutex_unlock(philo->table->death_lock);
-		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	} 
+	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, FORK);
 	print_action(philo, FORK);
@@ -31,14 +30,13 @@ void	take_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_lock(philo->table->death_lock);
 	if (philo->table->someone_died)
 	{
 		pthread_mutex_unlock(philo->table->death_lock);
-		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
+	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, EAT);
 	pthread_mutex_unlock(&philo->table->print);
@@ -52,14 +50,13 @@ void	eat(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_lock(philo->table->death_lock);
 	if (philo->table->someone_died)
 	{
 		pthread_mutex_unlock(philo->table->death_lock);
-		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
+	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, SLEEP);
 	pthread_mutex_unlock(&philo->table->print);
@@ -68,15 +65,14 @@ void	philo_sleep(t_philo *philo)
 
 void	think(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->print);
 	pthread_mutex_lock(philo->table->death_lock);
 	if (philo->table->someone_died)
 	{
-		pthread_mutex_unlock(philo->table->death_lock);	
-		pthread_mutex_unlock(&philo->table->print);
+		pthread_mutex_unlock(philo->table->death_lock);
 		return ;
 	}
-	pthread_mutex_unlock(philo->table->death_lock);	
+	pthread_mutex_lock(&philo->table->print);
+	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, THINK);
 	pthread_mutex_unlock(&philo->table->print);
 }
