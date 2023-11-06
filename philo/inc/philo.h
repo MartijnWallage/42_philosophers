@@ -56,6 +56,7 @@ typedef struct s_philo
 	int				time_to_sleep;
 	long			last_meal;
 	int				nbr_meals;
+	pthread_mutex_t	*meal_lock;
 	int				max_meals;
 	bool			has_forks;
 	time_t			*dinnertime;

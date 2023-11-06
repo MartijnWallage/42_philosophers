@@ -14,26 +14,43 @@
 
 bool	is_alive(t_philo *philo)
 {
-	return (ft_time() - philo->last_meal <= (long)philo->time_to_die);
+	bool	ret;
+
+	pthread_mutex_lock(philo->meal_lock);
+	ret = ft_time() - philo->last_meal <= (long)philo->time_to_die;
+	pthread_mutex_unlock(philo->meal_lock);
+	return (ret);
 }
 
 bool	is_hungry(t_philo *philo)
 {
+	bool	ret;
+
 	if (philo->max_meals == -1)
 		return (true);
-	return (philo->nbr_meals < philo->max_meals);
+	pthread_mutex_lock(philo->meal_lock);
+	ret = philo->nbr_meals < philo->max_meals;
+	pthread_mutex_unlock(philo->meal_lock);
+	return (ret);
 }
 
 bool	someone_is_hungry(t_table *table)
 {
-	int	i;
+	int		i;
 
 	if (table->max_meals == -1)
 		return (true);
 	i = -1;
 	while (++i < table->nbr_philos)
+	{
+		pthread_mutex_lock(table->philos[i].meal_lock);
 		if (table->philos[i].nbr_meals < table->max_meals)
+		{
+			pthread_mutex_unlock(table->philos[i].meal_lock);
 			return (true);
+		}
+		pthread_mutex_unlock(table->philos[i].meal_lock);
+	}
 	return (false);
 }
 

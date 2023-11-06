@@ -68,6 +68,8 @@ int	init_philos(t_table *table)
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
+		table->philos[i].meal_lock = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(table->philos[i].meal_lock, NULL);
 		table->philos[i].dinnertime = &table->dinnertime;
 		table->philos[i].last_meal = table->dinnertime;
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
