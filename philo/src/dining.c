@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 19:06:31 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/06 20:51:49 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*philosophize(void *param)
 	i = 0;
 	while (is_hungry(philo))
 	{
-		pthread_mutex_lock(philo->table->death_lock);
+		pthread_mutex_lock(&philo->table->death_lock);
 		if (philo->table->someone_died)
 		{
-			pthread_mutex_unlock(philo->table->death_lock);
+			pthread_mutex_unlock(&philo->table->death_lock);
 			break ;
 		}
-		pthread_mutex_unlock(philo->table->death_lock);
+		pthread_mutex_unlock(&philo->table->death_lock);
 		if (i % 4 == 0)
 			take_forks(philo);
 		else if (i % 4 == 1)
@@ -45,17 +45,6 @@ void	*philosophize(void *param)
 	return (NULL);
 }
 
-static void	*die(t_philo *philo)
-{
-	pthread_mutex_lock(philo->table->death_lock);
-	philo->table->someone_died = true;
-	pthread_mutex_unlock(philo->table->death_lock);
-	pthread_mutex_lock(&philo->table->print);
-	print_action(philo, DIED);
-	pthread_mutex_unlock(&philo->table->print);
-	return (NULL);
-}
-
 void	*monitor(void *param)
 {
 	t_table	*table;
@@ -63,15 +52,8 @@ void	*monitor(void *param)
 
 	table = (t_table *)param;
 	i = 0;
-	while (1)
+	while (is_alive(&table->philos[i]) && someone_is_hungry(table))
 	{
-		if (!is_alive(&table->philos[i]))
-		{
-			die(&table->philos[i]);
-			break ;
-		}
-		if (!someone_is_hungry(table))
-			break ;
 		if (++i == table->nbr_philos)
 			i = 0;
 	}

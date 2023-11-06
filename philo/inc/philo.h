@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:52:10 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/06 20:49:33 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ struct s_philo
 	int				index;
 	time_t			last_meal;
 	int				nbr_meals;
-	pthread_mutex_t	*meal_lock;
+	pthread_mutex_t	meal_lock;
 	bool			has_forks;
 	t_table			*table;
 	pthread_mutex_t	*left_fork;
@@ -71,7 +71,7 @@ struct s_table
 	int				time_to_sleep;
 	int				max_meals;
 	bool			someone_died;
-	pthread_mutex_t	*death_lock;
+	pthread_mutex_t	death_lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
@@ -96,6 +96,7 @@ int		init_philos(t_table *table);
 int		init_forks(t_table *table);
 void	init_monitor(t_table *table);
 /*	checks.c	*/
+bool	someone_died(t_table *table);
 bool	someone_is_hungry(t_table *table);
 bool	is_hungry(t_philo *philo);
 bool	is_alive(t_philo *philo);

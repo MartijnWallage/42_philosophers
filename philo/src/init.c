@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:41:10 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/06 20:51:11 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ int	init_args(int argc, char **argv, t_table *table)
 		table->max_meals = ft_atoi(argv[5]);
 	else
 		table->max_meals = -1;
-	pthread_mutex_init(&(table->print), NULL);
+	pthread_mutex_init(&table->print, NULL);
 	table->someone_died = false;
-	table->death_lock = malloc(sizeof(pthread_mutex_t));
-	if (!table->death_lock)
-		return (0); 
-	pthread_mutex_init(table->death_lock, NULL);
+	pthread_mutex_init(&table->death_lock, NULL);
 	table->dinnertime = ft_time();
 	return (1);
 }
@@ -66,9 +63,8 @@ int	init_philos(t_table *table)
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
-		table->philos[i].meal_lock = malloc(sizeof(pthread_mutex_t));
 		table->philos[i].last_meal = table->dinnertime;
-		pthread_mutex_init(table->philos[i].meal_lock, NULL);
+		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
 	return (1);
