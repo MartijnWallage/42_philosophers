@@ -17,7 +17,7 @@ bool	is_alive(t_philo *philo)
 	bool	ret;
 
 	pthread_mutex_lock(philo->meal_lock);
-	ret = ft_time() - philo->last_meal <= (long)philo->time_to_die;
+	ret = ft_time() - philo->last_meal <= philo->table->time_to_die;
 	pthread_mutex_unlock(philo->meal_lock);
 	return (ret);
 }
@@ -26,10 +26,10 @@ bool	is_hungry(t_philo *philo)
 {
 	bool	ret;
 
-	if (philo->max_meals == -1)
+	if (philo->table->max_meals == -1)
 		return (true);
 	pthread_mutex_lock(philo->meal_lock);
-	ret = philo->nbr_meals < philo->max_meals;
+	ret = philo->nbr_meals < philo->table->max_meals;
 	pthread_mutex_unlock(philo->meal_lock);
 	return (ret);
 }
@@ -56,7 +56,7 @@ bool	someone_is_hungry(t_table *table)
 
 bool	is_last_philo(t_philo *philo)
 {
-	if (philo->index == philo->nbr_philos - 1)
+	if (philo->index == philo->table->nbr_philos - 1)
 		return (true);
 	return (false);
 }

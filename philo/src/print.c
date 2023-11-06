@@ -50,6 +50,6 @@ void	print_action(t_philo *philo, const char *action)
 	print_color(philo->index);
 	print_effect(action);
 	printf("%ld %d %s\n", \
-		ft_time() - *philo->dinnertime, philo->index + 1, action);	
+		ft_time() - philo->table->dinnertime, philo->index + 1, action);	
 	printf(RESET"");
 }

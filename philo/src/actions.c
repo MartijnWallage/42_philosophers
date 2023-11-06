@@ -15,56 +15,68 @@
 void	take_forks(t_philo *philo)
 {
 	lock_forks(philo);
-	pthread_mutex_lock(philo->print);
- 	if (*philo->someone_died)
+	pthread_mutex_lock(&philo->table->print);
+	pthread_mutex_lock(philo->table->death_lock);
+ 	if (philo->table->someone_died)
 	{
-		pthread_mutex_unlock(philo->print);
+		pthread_mutex_unlock(philo->table->death_lock);
+		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	} 
+	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, FORK);
 	print_action(philo, FORK);
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 }
 
 void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->print);
-	if (*philo->someone_died)
+	pthread_mutex_lock(&philo->table->print);
+	pthread_mutex_lock(philo->table->death_lock);
+	if (philo->table->someone_died)
 	{
-		pthread_mutex_unlock(philo->print);
+		pthread_mutex_unlock(philo->table->death_lock);
+		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
+	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, EAT);
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
 	pthread_mutex_unlock(philo->meal_lock);
-	ft_usleep(philo->time_to_eat);
+	ft_usleep(philo->table->time_to_eat);
 	unlock_forks(philo);
 }
 
 void	philo_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(philo->print);
-	if (*philo->someone_died)
+	pthread_mutex_lock(&philo->table->print);
+	pthread_mutex_lock(philo->table->death_lock);
+	if (philo->table->someone_died)
 	{
-		pthread_mutex_unlock(philo->print);
+		pthread_mutex_unlock(philo->table->death_lock);
+		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
+	pthread_mutex_unlock(philo->table->death_lock);
 	print_action(philo, SLEEP);
-	pthread_mutex_unlock(philo->print);
-	ft_usleep(philo->time_to_sleep);
+	pthread_mutex_unlock(&philo->table->print);
+	ft_usleep(philo->table->time_to_sleep);
 }
 
 void	think(t_philo *philo)
 {
-	pthread_mutex_lock(philo->print);
-	if (*philo->someone_died)
+	pthread_mutex_lock(&philo->table->print);
+	pthread_mutex_lock(philo->table->death_lock);
+	if (philo->table->someone_died)
 	{
-		pthread_mutex_unlock(philo->print);
+		pthread_mutex_unlock(philo->table->death_lock);	
+		pthread_mutex_unlock(&philo->table->print);
 		return ;
 	}
+	pthread_mutex_unlock(philo->table->death_lock);	
 	print_action(philo, THINK);
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 }

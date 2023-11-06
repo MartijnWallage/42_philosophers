@@ -26,6 +26,10 @@ int	init_args(int argc, char **argv, t_table *table)
 		table->max_meals = -1;
 	pthread_mutex_init(&(table->print), NULL);
 	table->someone_died = false;
+	table->death_lock = malloc(sizeof(pthread_mutex_t));
+	if (!table->death_lock)
+		return (0); 
+	pthread_mutex_init(table->death_lock, NULL);
 	table->dinnertime = ft_time();
 	return (1);
 }
@@ -54,24 +58,17 @@ int	init_philos(t_table *table)
 	while (++i < table->nbr_philos)
 	{
 		table->philos[i].index = i;
-		table->philos[i].nbr_philos = table->nbr_philos;
-		table->philos[i].time_to_die = table->time_to_die;
-		table->philos[i].time_to_eat = table->time_to_eat;
-		table->philos[i].time_to_sleep = table->time_to_sleep;
-		table->philos[i].someone_died = &(table->someone_died);
 		table->philos[i].nbr_meals = 0;
-		table->philos[i].max_meals = table->max_meals;
-		table->philos[i].print = &(table->print);
 		table->philos[i].right_fork = &table->forks[i];
 		table->philos[i].has_forks = false;
+		table->philos[i].table = table;
 		if (!is_last_philo(&table->philos[i]))
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
 		table->philos[i].meal_lock = malloc(sizeof(pthread_mutex_t));
-		pthread_mutex_init(table->philos[i].meal_lock, NULL);
-		table->philos[i].dinnertime = &table->dinnertime;
 		table->philos[i].last_meal = table->dinnertime;
+		pthread_mutex_init(table->philos[i].meal_lock, NULL);
 		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
 	}	
 	return (1);

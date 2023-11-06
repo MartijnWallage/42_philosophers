@@ -18,11 +18,18 @@ void	*philosophize(void *param)
 	char	i;
 
 	philo = (t_philo *)param;
-	if (philo->nbr_philos == 1)
+	if (philo->table->nbr_philos == 1)
 		return (NULL);
 	i = 0;
-	while (!*philo->someone_died && is_hungry(philo))
+	while (is_hungry(philo))
 	{
+		pthread_mutex_lock(philo->table->death_lock);
+		if (philo->table->someone_died)
+		{
+			pthread_mutex_unlock(philo->table->death_lock);
+			break ;
+		}
+		pthread_mutex_unlock(philo->table->death_lock);
 		if (i % 4 == 0)
 			take_forks(philo);
 		else if (i % 4 == 1)
@@ -40,10 +47,12 @@ void	*philosophize(void *param)
 
 static void	*die(t_philo *philo)
 {
-	*(philo->someone_died) = true;
-	pthread_mutex_lock(philo->print);
+	pthread_mutex_lock(philo->table->death_lock);
+	philo->table->someone_died = true;
+	pthread_mutex_unlock(philo->table->death_lock);
+	pthread_mutex_lock(&philo->table->print);
 	print_action(philo, DIED);
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 	return (NULL);
 }
 

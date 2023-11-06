@@ -46,27 +46,23 @@
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
-typedef struct s_philo
+typedef struct s_table	t_table;
+typedef struct s_philo	t_philo;
+
+struct s_philo
 {
 	pthread_t		thread;
 	int				index;
-	int				nbr_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	long			last_meal;
+	time_t			last_meal;
 	int				nbr_meals;
 	pthread_mutex_t	*meal_lock;
-	int				max_meals;
 	bool			has_forks;
-	time_t			*dinnertime;
-	bool			*someone_died;
-	pthread_mutex_t	*print;
+	t_table			*table;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-}					t_philo;
+};
 
-typedef struct s_table
+struct s_table
 {
 	int				nbr_philos;
 	time_t			dinnertime;
@@ -75,11 +71,12 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				max_meals;
 	bool			someone_died;
+	pthread_mutex_t	*death_lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
-}					t_table;
+};
 
 /*	dining.c	*/
 void	*philosophize(void *param);
