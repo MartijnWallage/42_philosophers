@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/06 20:51:49 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:00:27 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,8 @@ void	*philosophize(void *param)
 	if (philo->table->nbr_philos == 1)
 		return (NULL);
 	i = 0;
-	while (is_hungry(philo))
+	while (is_hungry(philo) && !someone_died(philo->table))
 	{
-		pthread_mutex_lock(&philo->table->death_lock);
-		if (philo->table->someone_died)
-		{
-			pthread_mutex_unlock(&philo->table->death_lock);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->table->death_lock);
 		if (i % 4 == 0)
 			take_forks(philo);
 		else if (i % 4 == 1)

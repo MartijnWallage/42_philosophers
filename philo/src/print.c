@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/05 18:41:42 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:03:59 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,16 @@ static void	print_effect(const char *action)
 
 void	print_action(t_philo *philo, const char *action)
 {
+	pthread_mutex_lock(&philo->table->print);
+	if (someone_died(philo->table))
+	{
+		pthread_mutex_unlock(&philo->table->print);
+		return ;
+	}
 	print_color(philo->index);
 	print_effect(action);
 	printf("%ld %d %s\n", \
 		ft_time() - philo->table->dinnertime, philo->index + 1, action);	
 	printf(RESET"");
+	pthread_mutex_unlock(&philo->table->print);
 }
