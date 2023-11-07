@@ -6,13 +6,13 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 11:03:59 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:06:44 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	print_color(int index)
+void	print_color(int index)
 {
 	printf("\033[3");
 	if (index % 7 == 0)
@@ -31,7 +31,7 @@ static void	print_color(int index)
 		printf(WHITE"");
 }
 
-static void	print_effect(const char *action)
+void	print_effect(const char *action)
 {
 	if (ft_strcmp(action, FORK) == 0)
 		printf(NORMAL"");

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 10:36:57 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:43:38 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 #define THINK	"is thinking"
 #define SLEEP	"is sleeping"
 #define DIED	"died"
+#define DELAY	10
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -109,5 +110,7 @@ void	unlock_forks(t_philo *philo);
 void	lock_forks(t_philo *philo);
 /*	print.c	*/
 void	print_action(t_philo *philo, const char *action);
+void	print_effect(const char *action);
+void	print_color(int index);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:35:37 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 10:35:01 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:04:22 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ bool	is_alive(t_philo *philo)
 
 	pthread_mutex_lock(&philo->meal_lock);
 	ret = ft_time() - philo->last_meal <= philo->table->time_to_die;
-	pthread_mutex_unlock(&philo->meal_lock);
 	if (!ret)
 		die(philo);
+	pthread_mutex_unlock(&philo->meal_lock);
 	return (ret);
 }
 

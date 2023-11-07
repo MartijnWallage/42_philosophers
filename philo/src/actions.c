@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 10:57:52 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:17:35 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	eat(t_philo *philo)
 }
 
 void	philo_sleep(t_philo *philo)
-{
+{	
 	print_action(philo, SLEEP);
 	ft_usleep(philo->table->time_to_sleep);
 }
@@ -43,8 +43,14 @@ void	think(t_philo *philo)
 
 void	die(t_philo *philo)
 {
-	print_action(philo, DIED);
 	pthread_mutex_lock(&philo->table->death_lock);
 	philo->table->someone_died = true;
 	pthread_mutex_unlock(&philo->table->death_lock);
+	pthread_mutex_lock(&philo->table->print);
+	print_color(philo->index);
+	print_effect(DIED);
+	printf("%ld %d %s\n", \
+		ft_time() - philo->table->dinnertime, philo->index + 1, DIED);
+	printf(RESET"");
+	pthread_mutex_unlock(&philo->table->print);
 }

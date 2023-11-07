@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 11:00:27 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:20:49 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,20 @@
 void	*philosophize(void *param)
 {
 	t_philo	*philo;
-	char	i;
 
 	philo = (t_philo *)param;
-	if (philo->table->nbr_philos == 1)
+	if (philo->table->nbr_philos == 1 || philo->table->max_meals == 0)
 		return (NULL);
-	i = 0;
-	while (is_hungry(philo) && !someone_died(philo->table))
+	while (true)
 	{
-		if (i % 4 == 0)
-			take_forks(philo);
-		else if (i % 4 == 1)
-			eat(philo);
-		else if (i % 4 == 2)
-			philo_sleep(philo);
-		else if (i % 4 == 3)
-			think(philo);
-		i++;
+		if (someone_died(philo->table))
+			break ;
+		take_forks(philo);
+		eat(philo);
+		philo_sleep(philo);
+		if (!is_hungry(philo))
+			break;
+		think(philo);
 	}
 	if (philo->has_forks)
 		unlock_forks(philo);
@@ -45,10 +42,14 @@ void	*monitor(void *param)
 
 	table = (t_table *)param;
 	i = 0;
-	while (is_alive(&table->philos[i]) && someone_is_hungry(table))
+	while (is_alive(&table->philos[i]))
 	{
 		if (++i == table->nbr_philos)
+		{
+			if (!someone_is_hungry(table))
+				return (NULL);
 			i = 0;
+		}
 	}
 	return (NULL);
 }
