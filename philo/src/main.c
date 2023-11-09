@@ -14,6 +14,7 @@
 
 int	handle_error(char *message)
 {
+	printf("philosophers: ");
 	printf("%s\n", message);
 	return (1);
 }

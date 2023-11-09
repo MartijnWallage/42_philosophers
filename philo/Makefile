@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -pthread #-fsanitize=thread
+CFLAGS		:= -Wall -Wextra -Werror -pthread -fsanitize=thread
 SRCDIR		:= ./src
 OBJDIR		:= ./obj
 INCDIR		:= ./inc

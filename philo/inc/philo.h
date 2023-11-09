@@ -100,7 +100,6 @@ void	init_monitor(t_table *table);
 /*	checks.c	*/
 bool	is_stop(t_table *table);
 void	stop(t_table *table);
-bool	someone_is_hungry(t_table *table);
 bool	is_hungry(t_philo *philo);
 bool	is_alive(t_philo *philo);
 bool	is_last_philo(t_philo *philo);

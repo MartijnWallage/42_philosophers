@@ -35,9 +35,9 @@ bool	is_alive(t_philo *philo)
 
 	pthread_mutex_lock(&philo->meal_lock);
 	ret = ft_time() - philo->last_meal <= philo->table->time_to_die;
+	pthread_mutex_unlock(&philo->meal_lock);
 	if (!ret)
 		die(philo);
-	pthread_mutex_unlock(&philo->meal_lock);
 	return (ret);
 }
 
