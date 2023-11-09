@@ -22,27 +22,27 @@
 # include <sys/time.h>
 # include "../libft/inc/libft.h"
 
-#define RESET		"\033[0m"
-#define BOLD		";1m"
-#define FAINT		";2m"
-#define ITALIC		";3m"
-#define UNDERLINE	";4m"
-#define NORMAL		";6m"
-#define NEGATIVE	";7m"
-#define BLACK		"0"
-#define RED			"1"
-#define GREEN		"2"
-#define YELLOW		"3"
-#define BLUE		"4"
-#define PINK		"5"
-#define TEAL		"6"
-#define WHITE		"7"
-#define FORK	"has taken a fork"
-#define EAT		"is eating"
-#define THINK	"is thinking"
-#define SLEEP	"is sleeping"
-#define DIED	"died"
-#define DELAY	10
+# define RESET		"\033[0m"
+# define BOLD		";1m"
+# define FAINT		";2m"
+# define ITALIC		";3m"
+# define UNDERLINE	";4m"
+# define NORMAL		";6m"
+# define NEGATIVE	";7m"
+# define BLACK		"0"
+# define RED			"1"
+# define GREEN		"2"
+# define YELLOW		"3"
+# define BLUE		"4"
+# define PINK		"5"
+# define TEAL		"6"
+# define WHITE		"7"
+# define FORK		"has taken a fork"
+# define EAT			"is eating"
+# define THINK		"is thinking"
+# define SLEEP		"is sleeping"
+# define DIED		"died"
+# define DELAY		10
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -71,8 +71,8 @@ struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_meals;
-	bool			someone_died;
-	pthread_mutex_t	death_lock;
+	bool			stop;
+	pthread_mutex_t	stop_lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
@@ -98,7 +98,8 @@ int		init_philos(t_table *table);
 int		init_forks(t_table *table);
 void	init_monitor(t_table *table);
 /*	checks.c	*/
-bool	someone_died(t_table *table);
+bool	is_stop(t_table *table);
+void	stop(t_table *table);
 bool	someone_is_hungry(t_table *table);
 bool	is_hungry(t_philo *philo);
 bool	is_alive(t_philo *philo);
@@ -109,7 +110,7 @@ void	ft_usleep(int milliseconds);
 void	unlock_forks(t_philo *philo);
 void	lock_forks(t_philo *philo);
 /*	print.c	*/
-void	print_action(t_philo *philo, const char *action);
+int		print_action(t_philo *philo, const char *action);
 void	print_effect(const char *action);
 void	print_color(int index);
 

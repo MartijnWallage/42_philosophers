@@ -45,18 +45,19 @@ void	print_effect(const char *action)
 		printf(NEGATIVE"");
 }
 
-void	print_action(t_philo *philo, const char *action)
+int	print_action(t_philo *philo, const char *action)
 {
 	pthread_mutex_lock(&philo->table->print);
-	if (someone_died(philo->table))
+	if (is_stop(philo->table))
 	{
 		pthread_mutex_unlock(&philo->table->print);
-		return ;
+		return (0);
 	}
 	print_color(philo->index);
 	print_effect(action);
-	printf("%ld %d %s\n", \
-		ft_time() - philo->table->dinnertime, philo->index + 1, action);	
+	printf("%ld %d %s\n",
+		ft_time() - philo->table->dinnertime, philo->index + 1, action);
 	printf(RESET"");
 	pthread_mutex_unlock(&philo->table->print);
+	return (1);
 }

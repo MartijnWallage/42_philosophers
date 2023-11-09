@@ -25,8 +25,8 @@ int	init_args(int argc, char **argv, t_table *table)
 	else
 		table->max_meals = -1;
 	pthread_mutex_init(&table->print, NULL);
-	table->someone_died = false;
-	pthread_mutex_init(&table->death_lock, NULL);
+	pthread_mutex_init(&table->stop_lock, NULL);
+	table->stop = false;
 	table->dinnertime = ft_time();
 	return (1);
 }
@@ -56,17 +56,18 @@ int	init_philos(t_table *table)
 	{
 		table->philos[i].index = i;
 		table->philos[i].nbr_meals = 0;
-		table->philos[i].right_fork = &table->forks[i];
-		table->philos[i].has_forks = false;
 		table->philos[i].table = table;
+		table->philos[i].last_meal = table->dinnertime;
+		table->philos[i].has_forks = false;
+		table->philos[i].right_fork = &table->forks[i];
 		if (!is_last_philo(&table->philos[i]))
 			table->philos[i].left_fork = &table->forks[i + 1];
 		else
 			table->philos[i].left_fork = &table->forks[0];
-		table->philos[i].last_meal = table->dinnertime;
 		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
-		pthread_create(&(table->philos[i].thread), NULL, &philosophize, (void*)&table->philos[i]); 
-	}	
+		pthread_create(&(table->philos[i].thread),
+			NULL, &philosophize, (void*)&table->philos[i]); 
+	}
 	return (1);
 }
 

@@ -21,19 +21,21 @@ void	take_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->meal_lock);
-	print_action(philo, EAT);
-	philo->last_meal = ft_time();
-	philo->nbr_meals++;
-	pthread_mutex_unlock(&philo->meal_lock);
-	ft_usleep(philo->table->time_to_eat);
+	if (print_action(philo, EAT))
+	{
+		pthread_mutex_lock(&philo->meal_lock);
+		philo->last_meal = ft_time();
+		philo->nbr_meals++;
+		pthread_mutex_unlock(&philo->meal_lock);
+		ft_usleep(philo->table->time_to_eat);
+	}
 	unlock_forks(philo);
 }
 
 void	philo_sleep(t_philo *philo)
-{	
-	print_action(philo, SLEEP);
-	ft_usleep(philo->table->time_to_sleep);
+{
+	if (print_action(philo, SLEEP))
+		ft_usleep(philo->table->time_to_sleep);
 }
 
 void	think(t_philo *philo)
@@ -43,13 +45,11 @@ void	think(t_philo *philo)
 
 void	die(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->death_lock);
-	philo->table->someone_died = true;
-	pthread_mutex_unlock(&philo->table->death_lock);
+	stop(philo->table);
 	pthread_mutex_lock(&philo->table->print);
 	print_color(philo->index);
 	print_effect(DIED);
-	printf("%ld %d %s\n", \
+	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, DIED);
 	printf(RESET"");
 	pthread_mutex_unlock(&philo->table->print);

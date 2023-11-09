@@ -12,14 +12,21 @@
 
 #include "philo.h"
 
-bool	someone_died(t_table *table)
+bool	is_stop(t_table *table)
 {
 	bool	ret;
 
-	pthread_mutex_lock(&table->death_lock);
-	ret = table->someone_died;
-	pthread_mutex_unlock(&table->death_lock);
+	pthread_mutex_lock(&table->stop_lock);
+	ret = table->stop;
+	pthread_mutex_unlock(&table->stop_lock);
 	return (ret);
+}
+
+void	stop(t_table *table)
+{
+	pthread_mutex_lock(&table->stop_lock);
+	table->stop = true;
+	pthread_mutex_unlock(&table->stop_lock);
 }
 
 bool	is_alive(t_philo *philo)
@@ -44,26 +51,6 @@ bool	is_hungry(t_philo *philo)
 	ret = philo->nbr_meals < philo->table->max_meals;
 	pthread_mutex_unlock(&philo->meal_lock);
 	return (ret);
-}
-
-bool	someone_is_hungry(t_table *table)
-{
-	int		i;
-
-	if (table->max_meals == -1)
-		return (true);
-	i = -1;
-	while (++i < table->nbr_philos)
-	{
-		pthread_mutex_lock(&table->philos[i].meal_lock);
-		if (table->philos[i].nbr_meals < table->max_meals)
-		{
-			pthread_mutex_unlock(&table->philos[i].meal_lock);
-			return (true);
-		}
-		pthread_mutex_unlock(&table->philos[i].meal_lock);
-	}
-	return (false);
 }
 
 bool	is_last_philo(t_philo *philo)

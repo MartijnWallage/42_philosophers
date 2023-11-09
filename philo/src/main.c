@@ -22,7 +22,7 @@ int	is_valid(int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
 		return (0);
- 	if (ft_atoi(argv[1]) == 0)
+	if (ft_atoi(argv[1]) == 0)
 		return (0);
 	return (1);
 }
@@ -34,11 +34,11 @@ int	main(int argc, char *argv[])
 	if (!is_valid(argc, argv))
 		return (handle_error(FORMAT));
 	if (!init_args(argc, argv, &table))
-		return (1);
+		return (handle_error("number of philosophers must be more than 0"));
 	if (!init_forks(&table))
-		return (1);
+		return (handle_error("malloc failed"));
 	if (!init_philos(&table))
-		return (1);
+		return (handle_error("malloc failed"));
 	init_monitor(&table);
 	end_threads(&table);
 	end_mutexes(&table);

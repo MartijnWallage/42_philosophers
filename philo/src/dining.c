@@ -19,15 +19,11 @@ void	*philosophize(void *param)
 	philo = (t_philo *)param;
 	if (philo->table->nbr_philos == 1 || philo->table->max_meals == 0)
 		return (NULL);
-	while (true)
+	while (!is_stop(philo->table))
 	{
-		if (someone_died(philo->table))
-			break ;
 		take_forks(philo);
 		eat(philo);
 		philo_sleep(philo);
-		if (!is_hungry(philo))
-			break;
 		think(philo);
 	}
 	if (philo->has_forks)
@@ -39,17 +35,20 @@ void	*monitor(void *param)
 {
 	t_table	*table;
 	int		i;
+	int		sated_philos;
 
 	table = (t_table *)param;
+	sated_philos = 0;
 	i = 0;
-	while (is_alive(&table->philos[i]))
+	while (sated_philos < table->nbr_philos && is_alive(&table->philos[i]))
 	{
+		if (is_hungry(&table->philos[i]))
+			sated_philos = 0;
+		else
+			sated_philos++;
 		if (++i == table->nbr_philos)
-		{
-			if (!someone_is_hungry(table))
-				return (NULL);
 			i = 0;
-		}
 	}
+	stop(table);
 	return (NULL);
 }
