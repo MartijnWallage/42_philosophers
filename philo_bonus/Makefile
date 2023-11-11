@@ -6,7 +6,7 @@
 #    By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 16:38:57 by mwallage          #+#    #+#              #
-#    Updated: 2023/11/11 17:00:45 by mwallage         ###   ########.fr        #
+#    Updated: 2023/11/11 17:00:35 by mwallage         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC			:= main.c \
 				checks.c
 SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJS		:= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-NAME		:= philo
+NAME		:= philo_bonus
 
 all: $(NAME)
 

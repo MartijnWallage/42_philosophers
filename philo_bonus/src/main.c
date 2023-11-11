@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:09:09 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:57:33 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!init_args(argc, argv, &table))
 		return (1);
-	if (!init_forks(&table))
-		return (1);
+	init_table(&table);
+	sem_wait(table.stop);
 	if (!init_philos(&table))
 		return (1);
-	init_monitor(&table);
-	end_threads(&table);
-	end_mutexes(&table);
+	sem_wait(table.stop);
+	end_all(&table);
 	free_all(&table);
 	return (0);
 }

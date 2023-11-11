@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:09:41 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:57:16 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <semaphore.h>
+# include <signal.h>
+# include <fcntl.h>
 # include "../libft/inc/libft.h"
 
 # define RESET		"\033[0m"
@@ -52,15 +55,13 @@ typedef struct s_philo	t_philo;
 
 struct s_philo
 {
-	pthread_t		thread;
+	pid_t			pid;
 	int				index;
+	pthread_t		monitor;
 	time_t			last_meal;
 	int				nbr_meals;
-	pthread_mutex_t	meal_lock;
 	bool			has_forks;
 	t_table			*table;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
 };
 
 struct s_table
@@ -71,12 +72,11 @@ struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_meals;
-	bool			stop;
-	pthread_mutex_t	stop_lock;
-	pthread_mutex_t	print;
-	pthread_mutex_t	*forks;
+	sem_t			*death;
+	sem_t			*stop;
+	sem_t			*print;
+	sem_t			*forks;
 	t_philo			*philos;
-	pthread_t		monitor;
 };
 
 /*	dining.c	*/
@@ -87,16 +87,13 @@ void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
-void	die(t_philo *philo);
 /*	end.c	*/
-void	end_threads(t_table *table);
-void	end_mutexes(t_table *table);
+void	end_all(t_table *table);
 void	free_all(t_table *table);
 /*	init.c	*/
 int		init_args(int argc, char **argv, t_table *table);
 int		init_philos(t_table *table);
-int		init_forks(t_table *table);
-void	init_monitor(t_table *table);
+void	init_table(t_table *table);
 /*	checks.c	*/
 bool	is_stop(t_table *table);
 void	stop(t_table *table);
@@ -106,10 +103,8 @@ bool	is_last_philo(t_philo *philo);
 /*	utils.c	*/
 long	ft_time(void);
 void	ft_usleep(int milliseconds);
-void	unlock_forks(t_philo *philo);
-void	lock_forks(t_philo *philo);
 /*	print.c	*/
-int		print_action(t_philo *philo, const char *action);
+void	print_action(t_philo *philo, const char *action);
 void	print_effect(const char *action);
 void	print_color(int index);
 int		handle_error(char *message);
