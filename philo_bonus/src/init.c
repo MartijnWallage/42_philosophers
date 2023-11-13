@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 19:24:22 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 20:55:18 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	init_philos(t_table *table)
 		table->philos[i].nbr_meals = 0;
 		table->philos[i].table = table;
 		table->philos[i].last_meal = table->dinnertime;
+		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		table->philos[i].pid = fork();
 		if (table->philos[i].pid == -1)
 			return (free_all(table), handle_error("fork failed"));

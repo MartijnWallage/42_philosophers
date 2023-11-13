@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 19:22:47 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 20:42:29 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	take_forks(t_philo *philo)
 void	eat(t_philo *philo)
 {
 	sem_wait(philo->table->death);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
+	pthread_mutex_unlock(&philo->meal_lock);
 	print_action(philo, EAT);
 	sem_post(philo->table->death);
 	ft_usleep(philo->table->time_to_eat);
@@ -41,5 +43,6 @@ void	philo_sleep(t_philo *philo)
 void	think(t_philo *philo)
 {
 	print_action(philo, THINK);
-	ft_usleep((philo->table->time_to_die - (ft_time() - philo->last_meal)) / 4);
+	ft_usleep((philo->table->time_to_die
+		- (ft_time() - philo->last_meal)) / 4);
 }
