@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:57:33 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:23:01 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char *argv[])
 	if (!init_args(argc, argv, &table))
 		return (1);
 	init_table(&table);
-	sem_wait(table.stop);
 	if (!init_philos(&table))
 		return (1);
 	sem_wait(table.stop);

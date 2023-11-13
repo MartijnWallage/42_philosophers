@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:57:16 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:12:36 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <semaphore.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 # include "../libft/inc/libft.h"
 
 # define RESET		"\033[0m"
@@ -45,7 +46,7 @@
 # define THINK		"is thinking"
 # define SLEEP		"is sleeping"
 # define DIED		"died"
-# define DELAY		10
+# define DEATH		3
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -60,7 +61,7 @@ struct s_philo
 	pthread_t		monitor;
 	time_t			last_meal;
 	int				nbr_meals;
-	bool			has_forks;
+	pthread_mutex_t	meal_lock;
 	t_table			*table;
 };
 

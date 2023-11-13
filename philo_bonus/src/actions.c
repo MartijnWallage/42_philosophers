@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:52:07 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:32:10 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	take_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
+	print_action(philo, EAT);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
+	pthread_mutex_unlock(&philo->meal_lock);
 	ft_usleep(philo->table->time_to_eat);
 	sem_post(philo->table->forks);
 	sem_post(philo->table->forks);

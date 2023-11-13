@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:59:56 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:17:30 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ void	*philosophize(void *param)
 	}
 	return (NULL);
 }
-

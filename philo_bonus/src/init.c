@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:59:09 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:20:52 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	init_args(int argc, char **argv, t_table *table)
 	if (table->time_to_sleep < 60)
 		return (handle_error("time to sleep must be at least 60 ms"));
 	if (argc == 6)
-		table->max_meals = ft_max(0, ft_atoi(argv[5]));
+		table->max_meals = ft_max(0, ft_atoi(argv[5])) * 2;
 	else
 		table->max_meals = -1;
 	return (1);
@@ -41,7 +41,7 @@ void	init_table(t_table *table)
 	sem_unlink("forks");
 	table->death = sem_open("death", O_CREAT, 0600, 1);
 	table->print = sem_open("print", O_CREAT, 0600, 1);
-	table->stop = sem_open("stop", O_CREAT, 0600, 1);
+	table->stop = sem_open("stop", O_CREAT, 0600, 0);
 	table->forks = sem_open("forks", O_CREAT, 0600, table->nbr_philos);
 	table->dinnertime = ft_time();
 }
@@ -60,12 +60,15 @@ int	init_philos(t_table *table)
 		table->philos[i].nbr_meals = 0;
 		table->philos[i].table = table;
 		table->philos[i].last_meal = table->dinnertime;
-		table->philos[i].has_forks = false;
+		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		table->philos[i].pid = fork();
 		if (table->philos[i].pid == -1)
 			return (free_all(table), handle_error("fork failed"));
 		if (table->philos[i].pid == 0)
+		{
 			philosophize((void *)&table->philos[i]);
+			exit(0);
+		}
 	}
 	return (1);
 }
