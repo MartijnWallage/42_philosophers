@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 15:12:36 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:34:44 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define TEAL		"6"
 # define WHITE		"7"
 # define FORK		"has taken a fork"
-# define EAT			"is eating"
+# define EAT		"is eating"
 # define THINK		"is thinking"
 # define SLEEP		"is sleeping"
 # define DIED		"died"
@@ -61,7 +61,6 @@ struct s_philo
 	pthread_t		monitor;
 	time_t			last_meal;
 	int				nbr_meals;
-	pthread_mutex_t	meal_lock;
 	t_table			*table;
 };
 
@@ -88,6 +87,7 @@ void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 void	think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
+bool	is_last_meal(t_philo *philo);
 /*	end.c	*/
 void	end_all(t_table *table);
 void	free_all(t_table *table);
@@ -96,8 +96,6 @@ int		init_args(int argc, char **argv, t_table *table);
 int		init_philos(t_table *table);
 void	init_table(t_table *table);
 /*	checks.c	*/
-bool	is_stop(t_table *table);
-void	stop(t_table *table);
 bool	is_hungry(t_philo *philo);
 bool	is_alive(t_philo *philo);
 bool	is_last_philo(t_philo *philo);

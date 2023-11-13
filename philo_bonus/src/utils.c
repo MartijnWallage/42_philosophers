@@ -6,11 +6,11 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:53:13 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:36:41 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 long	ft_time(void)
 {

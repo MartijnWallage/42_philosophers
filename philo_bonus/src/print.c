@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:50:58 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:40:07 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	print_effect(const char *action)
 		printf(UNDERLINE"");
 	else if (ft_strcmp(action, DIED) == 0)
 		printf(NEGATIVE"");
+	else
+		printf(NORMAL"");
 }
 
 void	print_action(t_philo *philo, const char *action)
@@ -53,7 +55,8 @@ void	print_action(t_philo *philo, const char *action)
 	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, action);
 	printf(RESET"");
-	sem_post(philo->table->print);
+	if (*action != 'd')
+		sem_post(philo->table->print);
 }
 
 int	handle_error(char *message)

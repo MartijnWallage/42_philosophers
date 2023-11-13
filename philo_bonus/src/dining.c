@@ -6,11 +6,11 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 15:17:30 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:32:58 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 void	*monitor(void *param)
 {
@@ -26,9 +26,7 @@ void	*monitor(void *param)
 			sem_post(philo->table->stop);
 			break ;
 		}
-		sem_post(philo->table->death);
-		sem_wait(philo->table->death);
-		if (!is_hungry(philo))
+		if (is_last_philo(philo) && !is_hungry(philo))
 		{
 			sem_post(philo->table->stop);
 			break ;

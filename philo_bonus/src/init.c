@@ -6,11 +6,11 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 15:20:52 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:24:22 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 int	init_args(int argc, char **argv, t_table *table)
 {
@@ -27,7 +27,7 @@ int	init_args(int argc, char **argv, t_table *table)
 	if (table->time_to_sleep < 60)
 		return (handle_error("time to sleep must be at least 60 ms"));
 	if (argc == 6)
-		table->max_meals = ft_max(0, ft_atoi(argv[5])) * 2;
+		table->max_meals = ft_max(0, ft_atoi(argv[5]));
 	else
 		table->max_meals = -1;
 	return (1);
@@ -60,7 +60,6 @@ int	init_philos(t_table *table)
 		table->philos[i].nbr_meals = 0;
 		table->philos[i].table = table;
 		table->philos[i].last_meal = table->dinnertime;
-		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		table->philos[i].pid = fork();
 		if (table->philos[i].pid == -1)
 			return (free_all(table), handle_error("fork failed"));
@@ -69,6 +68,7 @@ int	init_philos(t_table *table)
 			philosophize((void *)&table->philos[i]);
 			exit(0);
 		}
+		ft_usleep(100);
 	}
 	return (1);
 }
