@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 20:32:39 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:52:30 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define THINK		"is thinking"
 # define SLEEP		"is sleeping"
 # define DIED		"died"
-# define DELAY		50
+# define DELAY		5
 
 # define FORMAT	"Format:\n\t./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -103,6 +103,7 @@ bool	is_last_philo(t_philo *philo);
 bool	is_someone_hungry(t_philo *philo);
 /*	utils.c	*/
 long	ft_time(void);
+int		current_time(t_philo *philo);
 void	ft_usleep(int milliseconds);
 int		mealtime(int round, t_table *table);
 int		which_round(t_philo *philo);

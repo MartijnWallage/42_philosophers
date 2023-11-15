@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 20:14:39 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:32:37 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ long	ft_time(void)
 	gettimeofday(&tv, NULL);
 	res = 1000 * (size_t)tv.tv_sec + (size_t)tv.tv_usec / 1000;
 	return (res);
+}
+
+int	current_time(t_philo *philo)
+{
+	return ((int)(ft_time() - philo->table->dinnertime));
 }
 
 void	ft_usleep(int milliseconds)
