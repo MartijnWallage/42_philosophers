@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 22:53:42 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:21:43 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	think(t_philo *philo)
 	print_action(philo, THINK);
 	round = which_round(philo);
 	meal_time = mealtime(round, philo->table);
-	ft_usleep((meal_time - current_time(philo)) / 2);
+	ft_usleep(meal_time - current_time(philo));
 	if (is_last_philo(philo))
 		ft_usleep(DELAY);
 }

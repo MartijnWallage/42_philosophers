@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:51 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 17:01:59 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:01:12 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ void	end_mutexes(t_table *table)
 
 	i = -1;
 	while (++i < table->nbr_philos)
+	{
+		pthread_mutex_destroy(&table->philos[i].meal_lock);
 		pthread_mutex_destroy(&table->forks[i]);
+	}
 	pthread_mutex_destroy(&table->print);
+	pthread_mutex_destroy(&table->stop_lock);
 }
 
 void	free_all(t_table *table)

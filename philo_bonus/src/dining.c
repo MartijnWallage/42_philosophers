@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 22:47:49 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:21:47 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*philosophize(void *param)
 	pthread_create(&philo->monitor, NULL, monitor, philo);
 	pthread_detach(philo->monitor);
 	meal_time = mealtime(which_round(philo), philo->table);
-	ft_usleep(meal_time / 2);
+	ft_usleep(meal_time - current_time(philo));
  	if (is_last_philo(philo))
 		ft_usleep(DELAY);
 	while (1)

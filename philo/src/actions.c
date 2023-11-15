@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/07 14:17:35 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:16:40 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	die(t_philo *philo)
 	print_effect(DIED);
 	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, DIED);
-	printf(RESET"");
+	write(STDIN_FILENO, RESET, 5);
 	pthread_mutex_unlock(&philo->table->print);
 }
