@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:35:37 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 20:50:29 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 20:39:34 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ bool	is_hungry(t_philo *philo)
 	ret = philo->nbr_meals < philo->table->max_meals;
 	pthread_mutex_unlock(&philo->meal_lock);
 	return (ret);
+}
+
+bool	is_someone_hungry(t_philo *philo)
+{
+	if (!is_last_philo(philo) || is_hungry(philo))
+		return (true);
+	return (false);
 }
 
 bool	is_last_meal(t_philo *philo)

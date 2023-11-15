@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:36 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 20:42:29 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 20:36:52 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	eat(t_philo *philo)
 	philo->last_meal = ft_time();
 	philo->nbr_meals++;
 	pthread_mutex_unlock(&philo->meal_lock);
-	print_action(philo, EAT);
+	if (is_someone_hungry(philo))
+		print_action(philo, EAT);
 	sem_post(philo->table->death);
 	ft_usleep(philo->table->time_to_eat);
 	sem_post(philo->table->forks);
@@ -42,7 +43,13 @@ void	philo_sleep(t_philo *philo)
 
 void	think(t_philo *philo)
 {
+	int	round;
+	int	meal_time;
+
 	print_action(philo, THINK);
-	ft_usleep((philo->table->time_to_die
-		- (ft_time() - philo->last_meal)) / 4);
+	round = which_round(philo);
+	meal_time = mealtime(round, philo->table);
+	ft_usleep(meal_time - (ft_time() - philo->table->dinnertime) - 10);
+	if (is_last_philo(philo))
+		ft_usleep(20);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dining.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/13 20:48:50 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/15 20:38:29 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	*monitor(void *param)
 			sem_post(philo->table->stop);
 			break ;
 		}
-		if (is_last_philo(philo) && !is_hungry(philo))
+		if (!is_someone_hungry(philo))
 		{
+			print_action(philo, EAT);
 			sem_post(philo->table->stop);
 			break ;
 		}
@@ -39,12 +40,15 @@ void	*monitor(void *param)
 void	*philosophize(void *param)
 {
 	t_philo	*philo;
+	int	meal_time;
 
 	philo = (t_philo *)param;
-	if (philo->table->nbr_philos == 1 || philo->table->max_meals == 0)
-		return (NULL);
 	pthread_create(&philo->monitor, NULL, monitor, philo);
 	pthread_detach(philo->monitor);
+	meal_time = mealtime(which_round(philo), philo->table);
+	ft_usleep(meal_time);
+ 	if (is_last_philo(philo))
+		ft_usleep(20);
 	while (1)
 	{
 		take_forks(philo);
