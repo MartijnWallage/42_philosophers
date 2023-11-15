@@ -28,6 +28,7 @@ int	main(int argc, char *argv[])
 	if (!init_args(argc, argv, &table))
 		return (1);
 	init_table(&table);
+	sem_wait(table.stop);
 	if (!init_philos(&table))
 		return (1);
 	sem_wait(table.stop);

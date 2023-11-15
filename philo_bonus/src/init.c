@@ -41,7 +41,7 @@ void	init_table(t_table *table)
 	sem_unlink("forks");
 	table->death = sem_open("death", O_CREAT, 0600, 1);
 	table->print = sem_open("print", O_CREAT, 0600, 1);
-	table->stop = sem_open("stop", O_CREAT, 0600, 0);
+	table->stop = sem_open("stop", O_CREAT, 0600, 1);
 	table->forks = sem_open("forks", O_CREAT, 0600, table->nbr_philos);
 	table->dinnertime = ft_time();
 }
@@ -69,7 +69,7 @@ int	init_philos(t_table *table)
 			philosophize((void *)&table->philos[i]);
 			exit(0);
 		}
-		ft_usleep(100);
+		ft_usleep(DELAY);
 	}
 	return (1);
 }

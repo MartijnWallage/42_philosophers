@@ -54,7 +54,7 @@ void	print_action(t_philo *philo, const char *action)
 	print_effect(action);
 	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, action);
-	printf(RESET"");
+	write(STDIN_FILENO, RESET, 5);
 	if (*action != 'd')
 		sem_post(philo->table->print);
 }
