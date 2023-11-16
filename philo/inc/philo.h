@@ -80,38 +80,38 @@ struct s_table
 };
 
 /*	dining.c	*/
-void	*philosophize(void *param);
-void	*monitor(void *param);
+void			*philosophize(void *param);
+void			*monitor(void *param);
 /*	actions.c	*/
-void	take_forks(t_philo *philo);
-void	eat(t_philo *philo);
-void	think(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-void	die(t_philo *philo);
+void			take_forks(t_philo *philo);
+void			eat(t_philo *philo);
+void			think(t_philo *philo);
+void			philo_sleep(t_philo *philo);
+void			die(t_philo *philo);
 /*	end.c	*/
-void	end_threads(t_table *table);
-void	end_mutexes(t_table *table);
-void	free_all(t_table *table);
+void			end_threads(t_table *table);
+void			end_mutexes(t_table *table);
+void			free_all(t_table *table);
 /*	init.c	*/
-int		init_args(int argc, char **argv, t_table *table);
-int		init_philos(t_table *table);
-int		init_forks(t_table *table);
-void	init_monitor(t_table *table);
+int				init_args(int argc, char **argv, t_table *table);
+int				init_philos(t_table *table);
+int				init_forks(t_table *table);
+void			init_monitor(t_table *table);
 /*	checks.c	*/
-bool	is_stop(t_table *table);
-void	stop(t_table *table);
-bool	is_hungry(t_philo *philo);
-bool	is_alive(t_philo *philo);
-bool	is_last_philo(t_philo *philo);
+bool			is_stop(t_table *table);
+void			stop(t_table *table);
+bool			is_hungry(t_philo *philo);
+bool			is_alive(t_philo *philo);
+bool			is_last_philo(t_philo *philo);
 /*	utils.c	*/
-long	ft_time(void);
-void	ft_usleep(int milliseconds);
-void	unlock_forks(t_philo *philo);
-void	lock_forks(t_philo *philo);
+unsigned int	ft_time(void);
+void			ft_usleep(unsigned int milliseconds);
+void			unlock_forks(t_philo *philo);
+void			lock_forks(t_philo *philo);
 /*	print.c	*/
-int		print_action(t_philo *philo, const char *action);
-void	print_effect(const char *action);
-void	print_color(int index);
-int		handle_error(char *message);
+int				print_action(t_philo *philo, const char *action);
+void			print_effect(const char *action);
+void			print_color(int index);
+int				handle_error(char *message);
 
 #endif

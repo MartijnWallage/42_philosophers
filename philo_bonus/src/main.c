@@ -12,6 +12,13 @@
 
 #include "philo.h"
 
+int	handle_error(char *message)
+{
+	printf("philosophers: ");
+	printf("%s\n", message);
+	return (0);
+}
+
 static int	is_valid(int argc)
 {
 	if (argc != 5 && argc != 6)
@@ -29,10 +36,10 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!init_table(&table))
 		return (1);
-	sem_wait(table.stop);
 	if (!init_philos(&table))
 		return (1);
-	sem_wait(table.stop);
+	if (sem_wait(table.stop) == -1)
+		return (handle_error("sem_wait error"));
 	end_all(&table);
 	free(table.philos);
 	return (0);

@@ -79,28 +79,30 @@ struct s_table
 	t_philo			*philos;
 };
 
+/*	main.c */
+int				handle_error(char *message);
 /*	dining.c	*/
-void	*monitor(void *param);
-void	dream(t_philo *philo);
-void	*philosophize(void *param);
+void			*monitor(void *param);
+void			dream(t_philo *philo);
+void			*philosophize(void *param);
 /*	actions.c	*/
-void	take_forks(t_philo *philo);
-void	eat(t_philo *philo);
-void	think(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-bool	is_last_meal(t_philo *philo);
+void			take_forks(t_philo *philo);
+void			eat(t_philo *philo);
+void			think(t_philo *philo);
+void			philo_sleep(t_philo *philo);
+bool			is_last_meal(t_philo *philo);
 /*	end.c	*/
-void	end_all(t_table *table);
-void	close_some(sem_t *a, sem_t *b, sem_t *c, sem_t *d);
+void			end_all(t_table *table);
+void			close_some(sem_t *a, sem_t *b, sem_t *c, sem_t *d);
 /*	init.c	*/
-int		init_args(int argc, char **argv, t_table *table);
-int		init_philos(t_table *table);
-int		init_table(t_table *table);
+int				init_args(int argc, char **argv, t_table *table);
+int				init_philos(t_table *table);
+int				init_table(t_table *table);
 /*	checks.c	*/
-bool	is_hungry(t_philo *philo);
-bool	is_alive(t_philo *philo);
-bool	is_last_philo(t_philo *philo);
-bool	is_someone_hungry(t_philo *philo);
+bool			is_hungry(t_philo *philo);
+bool			is_alive(t_philo *philo);
+bool			is_last_philo(t_philo *philo);
+bool			is_someone_hungry(t_philo *philo);
 /*	utils.c	*/
 unsigned int	ft_time(void);
 unsigned int	current_time(t_philo *philo);
@@ -108,9 +110,8 @@ void			ft_usleep(unsigned int milliseconds);
 unsigned int	mealtime(unsigned int round, t_table *table);
 unsigned int	which_round(t_philo *philo);
 /*	print.c	*/
-void	print_action(t_philo *philo, const char *action);
-void	print_effect(const char *action);
-void	print_color(int index);
-int		handle_error(char *message);
+void			print_action(t_philo *philo, const char *action);
+void			print_effect(const char *action);
+void			print_color(int index);
 
 #endif

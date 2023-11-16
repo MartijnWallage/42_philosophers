@@ -12,19 +12,19 @@
 
 #include "../inc/philo.h"
 
-long	ft_time(void)
+unsigned int	ft_time(void)
 {
 	struct timeval	tv;
-	long			res;
+	unsigned int	res;
 
 	gettimeofday(&tv, NULL);
 	res = 1000 * (size_t)tv.tv_sec + (size_t)tv.tv_usec / 1000;
 	return (res);
 }
 
-void	ft_usleep(int milliseconds)
+void	ft_usleep(unsigned int milliseconds)
 {
-	long	time;
+	unsigned int	time;
 
 	time = ft_time();
 	while (ft_time() < time + milliseconds)

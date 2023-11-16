@@ -45,8 +45,7 @@ void	dream(t_philo *philo)
 	round = which_round(philo);
 	meal_time = mealtime(round, philo->table);
 	ft_usleep(meal_time - current_time(philo) - 1);
- 	if (is_last_philo(philo)
-		&& philo->nbr_meals + 1 == philo->table->max_meals)
+	if (is_last_philo(philo) && philo->nbr_meals + 1 == philo->table->max_meals)
 		ft_usleep(8);
 }
 
@@ -56,9 +55,9 @@ void	*philosophize(void *param)
 
 	philo = (t_philo *)param;
 	if (pthread_create(&philo->monitor, NULL, monitor, philo))
-		return (NULL);
-	if (pthread_detach(philo->monitor))
-		return (NULL);
+		sem_post(philo->table->stop);
+	else if (pthread_detach(philo->monitor))
+		sem_post(philo->table->stop);
 	dream(philo);
 	while (1)
 	{

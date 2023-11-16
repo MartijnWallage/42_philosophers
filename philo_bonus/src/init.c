@@ -16,7 +16,9 @@ int	init_args(int argc, char **argv, t_table *table)
 {
 	table->nbr_philos = ft_atoi(argv[1]);
 	if (table->nbr_philos <= 0)
-		return (handle_error("invite at least one philosopher to dinner"));
+		return (handle_error("invite at least one philosopher"));
+	else if (table->nbr_philos > 200)
+		return (handle_error("invite no more than 200 philosophers"));
 	table->time_to_eat = ft_atoi(argv[3]);
 	if (table->time_to_eat < 60)
 		return (handle_error("time to eat must be at least 60 ms"));
@@ -41,7 +43,7 @@ int	init_table(t_table *table)
 	sem_unlink("forks");
 	table->death = sem_open("death", O_CREAT, 0600, 1);
 	table->print = sem_open("print", O_CREAT, 0600, 1);
-	table->stop = sem_open("stop", O_CREAT, 0600, 1);
+	table->stop = sem_open("stop", O_CREAT, 0600, 0);
 	table->forks = sem_open("forks", O_CREAT, 0600, table->nbr_philos);
 	if (table->death == SEM_FAILED || table->print == SEM_FAILED
 		|| table->stop == SEM_FAILED || table->forks == SEM_FAILED)

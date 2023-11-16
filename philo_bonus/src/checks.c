@@ -44,7 +44,7 @@ bool	is_someone_hungry(t_philo *philo)
 bool	is_last_meal(t_philo *philo)
 {
 	bool	ret;
-	
+
 	pthread_mutex_lock(&philo->meal_lock);
 	ret = (philo->nbr_meals + 1 == philo->table->max_meals);
 	pthread_mutex_unlock(&philo->meal_lock);

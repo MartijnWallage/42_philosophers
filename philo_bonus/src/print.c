@@ -58,10 +58,3 @@ void	print_action(t_philo *philo, const char *action)
 	if (*action != 'd' && !(is_last_philo(philo) && !is_hungry(philo)))
 		sem_post(philo->table->print);
 }
-
-int	handle_error(char *message)
-{
-	printf("philosophers: ");
-	printf("%s\n", message);
-	return (0);
-}

@@ -40,7 +40,7 @@ unsigned int	mealtime(unsigned int round, t_table *table)
 {
 	unsigned int	wait;
 	unsigned int	ret;
-	
+
 	if (table->time_to_sleep <= table->time_to_eat)
 		return (round * table->time_to_eat);
 	wait = table->time_to_eat + table->time_to_sleep;
@@ -53,7 +53,7 @@ unsigned int	mealtime(unsigned int round, t_table *table)
 	ret += (round / 2 * wait);
 	return (ret);
 }
- 
+
 unsigned int	which_round(t_philo *philo)
 {
 	unsigned int	new_index;
