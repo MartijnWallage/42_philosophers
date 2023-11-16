@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:35:37 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 20:40:14 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:59:08 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,10 @@ bool	is_hungry(t_philo *philo)
 
 bool	is_someone_hungry(t_philo *philo)
 {
-	if (!is_last_philo(philo) || is_hungry(philo))
-		return (true);
-	return (false);
+	return (!is_last_philo(philo) || is_hungry(philo));
 }
 
 bool	is_last_philo(t_philo *philo)
 {
-	if (philo->index == philo->table->nbr_philos - 1)
-		return (true);
-	return (false);
+	return (philo->index == philo->table->nbr_philos - 1);
 }
