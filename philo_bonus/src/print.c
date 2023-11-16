@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 22:38:53 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:02:03 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	print_action(t_philo *philo, const char *action)
 	print_effect(action);
 	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, action);
-	write(STDIN_FILENO, RESET, 5);
+	write(STDOUT_FILENO, RESET, 5);
 	if (*action != 'd' && !(is_last_philo(philo) && !is_hungry(philo)))
 		sem_post(philo->table->print);
 }
