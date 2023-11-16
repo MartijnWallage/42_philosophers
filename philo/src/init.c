@@ -43,7 +43,7 @@ int	init_forks(t_table *table)
 
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_philos);
 	if (table->forks == NULL)
-		return (free(table), handle_error("malloc failed"));
+		return (handle_error("malloc failed"));
 	i = -1;
 	while (++i < table->nbr_philos)
 		pthread_mutex_init(&(table->forks[i]), NULL);
@@ -56,7 +56,7 @@ int	init_philos(t_table *table)
 
 	table->philos = malloc(sizeof(t_philo) * table->nbr_philos);
 	if (table->philos == NULL)
-		return (free(table->forks), free(table), handle_error("malloc failed"));
+		return (free(table->forks), handle_error("malloc failed"));
 	i = -1;
 	while (++i < table->nbr_philos)
 	{
