@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 18:29:35 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:17:53 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	init_args(int argc, char **argv, t_table *table)
 	return (1);
 }
 
-void	init_table(t_table *table)
+int	init_table(t_table *table)
 {
 	sem_unlink("death");
 	sem_unlink("print");
@@ -43,7 +43,14 @@ void	init_table(t_table *table)
 	table->print = sem_open("print", O_CREAT, 0600, 1);
 	table->stop = sem_open("stop", O_CREAT, 0600, 1);
 	table->forks = sem_open("forks", O_CREAT, 0600, table->nbr_philos);
+	if (table->death == SEM_FAILED || table->print == SEM_FAILED
+		|| table->stop == SEM_FAILED || table->forks == SEM_FAILED)
+	{
+		close_some(table->death, table->print, table->stop, table->forks);
+		return (handle_error("semaphore failed"));
+	}
 	table->dinnertime = ft_time();
+	return (1);
 }
 
 int	init_philos(t_table *table)
@@ -52,7 +59,7 @@ int	init_philos(t_table *table)
 
 	table->philos = malloc(sizeof(t_philo) * table->nbr_philos);
 	if (table->philos == NULL)
-		return (free(table), handle_error("malloc failed"));
+		return (end_all(table), handle_error("malloc failed"));
 	i = -1;
 	while (++i < table->nbr_philos)
 	{
@@ -63,7 +70,8 @@ int	init_philos(t_table *table)
 		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		table->philos[i].pid = fork();
 		if (table->philos[i].pid == -1)
-			return (free_all(table), handle_error("fork failed"));
+			return (end_all(table), free(table->philos),
+				handle_error("fork failed"));
 		if (table->philos[i].pid == 0)
 		{
 			philosophize((void *)&table->philos[i]);

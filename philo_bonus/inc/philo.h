@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 13:10:13 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:15:40 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define NORMAL		";6m"
 # define NEGATIVE	";7m"
 # define BLACK		"0"
-# define RED			"1"
+# define RED		"1"
 # define GREEN		"2"
 # define YELLOW		"3"
 # define BLUE		"4"
@@ -91,22 +91,22 @@ void	philo_sleep(t_philo *philo);
 bool	is_last_meal(t_philo *philo);
 /*	end.c	*/
 void	end_all(t_table *table);
-void	free_all(t_table *table);
+void	close_some(sem_t *a, sem_t *b, sem_t *c, sem_t *d);
 /*	init.c	*/
 int		init_args(int argc, char **argv, t_table *table);
 int		init_philos(t_table *table);
-void	init_table(t_table *table);
+int		init_table(t_table *table);
 /*	checks.c	*/
 bool	is_hungry(t_philo *philo);
 bool	is_alive(t_philo *philo);
 bool	is_last_philo(t_philo *philo);
 bool	is_someone_hungry(t_philo *philo);
 /*	utils.c	*/
-long	ft_time(void);
-int		current_time(t_philo *philo);
-void	ft_usleep(int milliseconds);
-int		mealtime(int round, t_table *table);
-int		which_round(t_philo *philo);
+unsigned int	ft_time(void);
+unsigned int	current_time(t_philo *philo);
+void			ft_usleep(unsigned int milliseconds);
+unsigned int	mealtime(unsigned int round, t_table *table);
+unsigned int	which_round(t_philo *philo);
 /*	print.c	*/
 void	print_action(t_philo *philo, const char *action);
 void	print_effect(const char *action);

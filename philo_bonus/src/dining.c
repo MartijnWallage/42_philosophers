@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 13:59:42 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:58:07 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	*philosophize(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	pthread_create(&philo->monitor, NULL, monitor, philo);
-	pthread_detach(philo->monitor);
+	if (pthread_create(&philo->monitor, NULL, monitor, philo))
+		return (NULL);
+	if (pthread_detach(philo->monitor))
+		return (NULL);
 	dream(philo);
 	while (1)
 	{
