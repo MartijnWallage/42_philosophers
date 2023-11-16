@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mwallage <mwallage@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 16:38:57 by mwallage          #+#    #+#              #
-#    Updated: 2023/11/15 22:41:44 by mwallage         ###   ########.fr        #
+#    Updated: 2023/11/16 20:47:34 by mwallage         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

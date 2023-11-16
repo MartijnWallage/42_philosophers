@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:58:21 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 15:09:05 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:31:37 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	is_valid(int argc)
 int	main(int argc, char *argv[])
 {
 	t_table	table;
+	pid_t	pid;
 
 	if (!is_valid(argc))
 		return (1);
@@ -38,9 +39,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!init_philos(&table))
 		return (1);
-	if (sem_wait(table.stop) == -1)
-		return (handle_error("sem_wait error"));
-	end_all(&table);
+	pid = waitpid(-1, NULL, 0);
+	end_all(&table, pid);
 	free(table.philos);
 	return (0);
 }

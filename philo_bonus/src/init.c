@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 15:17:53 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:39:53 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,15 @@ int	init_table(t_table *table)
 {
 	sem_unlink("death");
 	sem_unlink("print");
-	sem_unlink("stop");
 	sem_unlink("forks");
 	table->death = sem_open("death", O_CREAT, 0600, 1);
 	table->print = sem_open("print", O_CREAT, 0600, 1);
-	table->stop = sem_open("stop", O_CREAT, 0600, 0);
 	table->forks = sem_open("forks", O_CREAT, 0600, table->nbr_philos);
 	if (table->death == SEM_FAILED || table->print == SEM_FAILED
-		|| table->stop == SEM_FAILED || table->forks == SEM_FAILED)
+		|| table->forks == SEM_FAILED)
 	{
-		close_some(table->death, table->print, table->stop, table->forks);
-		return (handle_error("semaphore failed"));
+		close_some(table->death, table->print, table->forks);
+		return (handle_error("semaphores failed"));
 	}
 	table->dinnertime = ft_time();
 	return (1);
@@ -61,7 +59,7 @@ int	init_philos(t_table *table)
 
 	table->philos = malloc(sizeof(t_philo) * table->nbr_philos);
 	if (table->philos == NULL)
-		return (end_all(table), handle_error("malloc failed"));
+		return (end_all(table, 0), handle_error("malloc failed"));
 	i = -1;
 	while (++i < table->nbr_philos)
 	{
@@ -72,7 +70,7 @@ int	init_philos(t_table *table)
 		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		table->philos[i].pid = fork();
 		if (table->philos[i].pid == -1)
-			return (end_all(table), free(table->philos),
+			return (end_all(table, 0), free(table->philos),
 				handle_error("fork failed"));
 		if (table->philos[i].pid == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 15:15:40 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:39:40 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ struct s_table
 	int				time_to_sleep;
 	int				max_meals;
 	sem_t			*death;
-	sem_t			*stop;
 	sem_t			*print;
 	sem_t			*forks;
 	t_philo			*philos;
@@ -92,8 +91,8 @@ void			think(t_philo *philo);
 void			philo_sleep(t_philo *philo);
 bool			is_last_meal(t_philo *philo);
 /*	end.c	*/
-void			end_all(t_table *table);
-void			close_some(sem_t *a, sem_t *b, sem_t *c, sem_t *d);
+void			end_all(t_table *table, pid_t pid);
+void			close_some(sem_t *a, sem_t *b, sem_t *c);
 /*	init.c	*/
 int				init_args(int argc, char **argv, t_table *table);
 int				init_philos(t_table *table);

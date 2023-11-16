@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:35:37 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/15 20:39:34 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:40:14 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ bool	is_someone_hungry(t_philo *philo)
 	if (!is_last_philo(philo) || is_hungry(philo))
 		return (true);
 	return (false);
-}
-
-bool	is_last_meal(t_philo *philo)
-{
-	bool	ret;
-
-	pthread_mutex_lock(&philo->meal_lock);
-	ret = (philo->nbr_meals + 1 == philo->table->max_meals);
-	pthread_mutex_unlock(&philo->meal_lock);
-	return (ret);
 }
 
 bool	is_last_philo(t_philo *philo)
