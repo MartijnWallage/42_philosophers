@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:19:18 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 20:38:38 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:24:52 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	print_action(t_philo *philo, const char *action)
 	printf("%ld %d %s\n",
 		ft_time() - philo->table->dinnertime, philo->index + 1, action);
 	write(STDOUT_FILENO, RESET, 5);
-	if (*action != 'd' && !(is_last_philo(philo) && !is_hungry(philo)))
+	if (*action != 'd' && is_someone_hungry(philo))
 		sem_post(philo->table->print);
 }

@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:51:08 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 20:39:40 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:26:59 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,13 @@ struct s_table
 int				handle_error(char *message);
 /*	dining.c	*/
 void			*monitor(void *param);
-void			dream(t_philo *philo);
 void			*philosophize(void *param);
 /*	actions.c	*/
 void			take_forks(t_philo *philo);
 void			eat(t_philo *philo);
+void			dream(t_philo *philo);
 void			think(t_philo *philo);
 void			philo_sleep(t_philo *philo);
-bool			is_last_meal(t_philo *philo);
 /*	end.c	*/
 void			end_all(t_table *table, pid_t pid);
 void			close_some(sem_t *a, sem_t *b, sem_t *c);

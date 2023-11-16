@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:44 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/16 20:39:15 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:26:24 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ void	*monitor(void *param)
 		sem_post(philo->table->death);
 	}
 	return (NULL);
-}
-
-void	dream(t_philo *philo)
-{
-	int	meal_time;
-	int	round;
-
-	round = which_round(philo);
-	meal_time = mealtime(round, philo->table);
-	ft_usleep(meal_time - current_time(philo) - 1);
-	if (is_last_philo(philo) && philo->nbr_meals + 1 == philo->table->max_meals)
-		ft_usleep(8);
 }
 
 void	*philosophize(void *param)
