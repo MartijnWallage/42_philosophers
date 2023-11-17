@@ -6,7 +6,7 @@
 /*   By: mwallage <mwallage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:04:59 by mwallage          #+#    #+#             */
-/*   Updated: 2023/11/11 16:32:29 by mwallage         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:19:08 by mwallage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_philos(t_table *table)
 			table->philos[i].left_fork = &table->forks[0];
 		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		pthread_create(&(table->philos[i].thread),
-			NULL, &philosophize, (void*)&table->philos[i]); 
+			NULL, &philosophize, (void*)&table->philos[i]);
 	}
 	return (1);
 }
