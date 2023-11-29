@@ -23,8 +23,12 @@ In the non-bonus part of the project (see the /philo folder), there is a *thread
 A thread is a somewhat independent control flow, which still shares memory space with the other threads in the same process.
 Since threads access the same memory space, different threads can access (check or change) the same bit of memory (the same variable) simultaneously.
 That is called a *data race*, and it needs to be avoided.
-You can see why: imagine a bit of code that changes a variable depending on its value.
-If several threads simultaneously run that bit of code, thread 
+You can see why: imagine Thread A checks a conditional that depends on the value of some variable `x` (say, `x < 100`).
+A checks the conditional, finds it satisfied, and proceeds to the consequent.
+But in the meantime, Thread B has changed the value of `x`, invalidating the conditional!
+Chaos would ensue.
+Our program would no longer be deterministic.
+We don't want that.
 
 The way to avoid data races is put a kind of lock, called a *mutex*, on each shared variable.
 When a thread wants to check or change the variable, it first locks the mutex; while the mutex is locked, no other threads can get past this point in the code.
