@@ -10,7 +10,7 @@ They are only able to start eating their spaghetti when they have *two* forks.
 So (oddly unfazed by questions of hygiene) they eat when they manage to get of the fork of their left or right neighbour, as well as of their own fork, of course, which is ever in danger of being taken by one of those neighbours.
 After they are done eating, they sleep, and when they are done sleeping, they wake up and think until they can get hold of two forks again.
 If they don't eat in time, they die.
-What policy for taking forks should they think up so that none of them die, or at least, so that none of them die needlessly?
+What policy for taking forks should they implement so that none of them die, or at least, so that none of them die needlessly?
 They have to make these important decisions all by themselves; they never talk to each other.
 
 I like this problem for two reasons. 
