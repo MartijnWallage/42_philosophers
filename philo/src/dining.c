@@ -21,10 +21,10 @@ void	*philosophize(void *param)
 		return (NULL);
 	while (!is_stop(philo->table))
 	{
+		think(philo);
 		take_forks(philo);
 		eat(philo);
 		philo_sleep(philo);
-		think(philo);
 	}
 	if (philo->has_forks)
 		unlock_forks(philo);

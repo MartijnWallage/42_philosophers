@@ -15,26 +15,24 @@
 void	print_color(int index)
 {
 	printf("\033[3");
-	if (index % 7 == 0)
+	if (index % 6 == 0)
 		printf(RED"");
-	else if (index % 7 == 1)
+	else if (index % 6 == 1)
 		printf(GREEN"");
-	else if (index % 7 == 2)
+	else if (index % 6 == 2)
 		printf(YELLOW"");
-	else if (index % 7 == 3)
+	else if (index % 6 == 3)
 		printf(BLUE"");
-	else if (index % 7 == 4)
+	else if (index % 6 == 4)
 		printf(PINK"");
-	else if (index % 7 == 5)
+	else if (index % 6 == 5)
 		printf(TEAL"");
-	else if (index % 7 == 6)
-		printf(WHITE"");
 }
 
 void	print_effect(const char *action)
 {
 	if (ft_strcmp(action, FORK) == 0)
-		printf(NORMAL"");
+		printf(BOLD"");
 	else if (ft_strcmp(action, THINK) == 0)
 		printf(ITALIC"");
 	else if (ft_strcmp(action, SLEEP) == 0)
