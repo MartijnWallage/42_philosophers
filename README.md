@@ -8,7 +8,7 @@ This program is a project of the 42 School, called "Philosophers", and based on 
 A number of philosophers sit around a table, each with a bowl of spaghetti in front of them, and just one fork.
 However, they absolutely refuse to eat with just one fork.
 They are only able to start eating their spaghetti when they have *two* forks.
-(Don't ask why – I guess forks to them are what chopsticks are to the less philosophically inclined.)
+(Forks to them are what chopsticks are to the less philosophically inclined.)
 
 So, oddly unfazed by questions of hygiene, they eat when they manage to get hold of the fork of their left or right neighbour, as well as of their own, of course, which is ever in danger of being taken by one of those neighbours.
 
@@ -26,7 +26,8 @@ But this funny scenario also represents a real problem about running different p
 
 ## Threads and Data Races
 
-In the non-bonus part of the project (see the /philo folder), there is a *thread* for each philosopher. A thread is a somewhat independent control flow, which still shares memory space with the other threads in the same process.
+In the non-bonus part of the project (see the /philo folder), there is a *thread* for each philosopher. 
+A thread is a somewhat independent control flow, which still shares memory space with the other threads in the same process.
 
 Since threads access the same memory space, different threads can access (check or change) the same bit of memory (the same variable) simultaneously.
 That is called a *data race*, and it needs to be avoided.
@@ -70,4 +71,3 @@ If the user sets these parameters in such a way that the philosophers won't be a
 In the bonus part of the project (see the /philo_bonus folder), there is a *process* for each philosopher.
 Instead of a mutex for each fork, we use a *semaphor* with the value of the number of forks/philosophers.
 This makes some things easier and some things harder.
-On the whole, it is definitely the most time-expensive bonus I have encountered at 42, since it's basically a whole new program.
