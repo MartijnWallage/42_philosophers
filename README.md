@@ -1,4 +1,14 @@
-# 42 Philosophers
+# 42_philosophers
+
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
+
+Author: Martijn Wallage
+
+A project of the 42 Core Curriculum.
+
+Score: 125%
+
+## About
 
 *Philosophers* is a project of the 42 School core curriculum. It is a simulation and solution of the <a href="https://en.wikipedia.org/wiki/Dining_philosophers_problem" target="_blank">Dining Philosophers Problem</a> for concurrent computing.
 
